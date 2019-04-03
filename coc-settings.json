@@ -1,0 +1,5 @@
+{
+  "suggest.autoTrigger": "always",
+  "tsserver.enableJavascript": true,
+  "suggest.enablePreview": true
+}

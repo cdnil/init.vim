@@ -4,30 +4,28 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'idanarye/vim-merginal' "Fugitive extension to manage and merge Git branches
 Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim' "Distraction-free writing
-Plug 'junegunn/gv.vim'
+Plug 'junegunn/gv.vim' " a git commit browser
 Plug 'justinmk/vim-sneak' " motion
 Plug 'leafgarland/typescript-vim' " Typescript syntax files
 Plug 'majutsushi/tagbar'
-Plug 'mattn/emmet-vim'
 Plug 'mhinz/vim-startify' " The fancy start screen for Vim
 Plug 'moll/vim-node'
 Plug 'mxw/vim-jsx'
+Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
 Plug 'neoclide/denite-extra'
 Plug 'pangloss/vim-javascript'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'prettier/vim-prettier', { 'do': 'yarn' }
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'sonph/onehalf', { 'rtp': 'vim/' }
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive' " an awesome Git wrapper
@@ -38,6 +36,10 @@ call plug#end()
 
 " => Plugin Trash
 
+" Plug 'mattn/emmet-vim'
+" Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
+" Plug 'ternjs/tern_for_vim', { 'do': 'yarn install', 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'Quramy/tsuquyomi' " typescript plugin
 " Plug 'easymotion/vim-easymotion'
 " Plug 'bling/vim-bufferline'
 " Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
@@ -63,6 +65,19 @@ call plug#end()
 
 " => plugin Config
 
+" -> coc.nvim
+
+let g:coc_global_extensions = [
+\ 'coc-tsserver',
+\ 'coc-json',
+\ 'coc-css',
+\ 'coc-html',
+\ 'coc-yaml',
+\ 'coc-python',
+\ 'coc-emmet',
+\ 'coc-snippets',
+\ ]
+
 " -> fzf
 
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
@@ -73,7 +88,6 @@ let g:fzf_layout = { 'window': 'enew' } " `window` neovim only
 " autocmd! FileType fzf
 " autocmd  FileType fzf set laststatus=0 noshowmode noruler
 "   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-
 
 " -> pangu
 
