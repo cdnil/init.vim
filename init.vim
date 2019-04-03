@@ -23,12 +23,12 @@ Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
 Plug 'Shougo/denite.nvim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'sonph/onehalf', { 'rtp': 'vim/' }
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive' " an awesome Git wrapper
+Plug 'tpope/vim-rhubarb' " GitHub extension for fugitive.vim
 Plug 'tpope/vim-surround'
 Plug 'w0rp/ale'
 
@@ -36,6 +36,7 @@ call plug#end()
 
 " => Plugin Trash
 
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'mattn/emmet-vim'
 " Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
 " Plug 'ternjs/tern_for_vim', { 'do': 'yarn install', 'for': ['javascript', 'javascript.jsx'] }
