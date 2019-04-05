@@ -245,6 +245,9 @@ set ignorecase
 " map leader to space
 let mapleader=" "
 
+xnoremap <  <gv
+xnoremap >  >gv
+
 nnoremap <leader>z :Goyo<cr>
 
 " edit vimrc file
