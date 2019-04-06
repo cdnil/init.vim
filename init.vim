@@ -70,6 +70,29 @@ call plug#end()
 
 let g:startify_change_to_dir = 0
 let g:startify_change_to_vcs_root = 1
+let g:startify_bookmarks = [ {'c': '~/.config/nvim/init.vim'}, '~/.zshrc' ]
+let g:startify_enable_special = 0
+
+let g:startify_custom_header = [
+        \ '             ___  _  _    _    ___  ___     ___  ___   ___    _     ',
+        \ '            / __|| || |  /_\  | _ \| __|   |_ _||   \ | __|  /_\    ',
+        \ '            \__ \| __ | / _ \ |  _/| _|     | | | |) || _|  / _ \   ',
+        \ '            |___/|_||_|/_/ \_\|_|  |___|   |___||___/ |___|/_/ \_\  ',
+        \ '             ___  _  _  _____  ___           ___  ___   ___   ___   ',
+        \ '            |_ _|| \| ||_   _|/ _ \         / __|/ _ \ |   \ | __|  ', 
+        \ '             | | | .` |  | | | (_) |       | (__| (_) || |) || _|   ', 
+        \ '            |___||_|\_|  |_|  \___/         \___|\___/ |___/ |___|  ', 
+        \ ]
+
+let g:startify_lists = [
+        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+        \ { 'type': 'sessions',  'header': ['   Sessions']       },
+        \ { 'type': 'commands',  'header': ['   Commands']       },
+        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+        \ { 'type': 'files',     'header': ['   MRU']            },
+        \ ]
+
+
 autocmd! TabNewEntered * Startify
 
 " -> coc.nvim
