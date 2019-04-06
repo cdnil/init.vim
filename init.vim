@@ -162,22 +162,52 @@ nnoremap <leader>nr :NERDTreeFind<cr>
 
 " -> lightline
 
-let g:lightline = {
-      \ 'colorscheme': 'onehalfdark',
-      \ 'active': {
-      \   'left':  [ ['mode'],
-      \              [ 'workingDirectory', 'gitbranch' ],
-      \              [ 'readonly', 'filename', 'modified'],
-      \              [ 'percent' ],
-      \              [ 'filetype' ] ],
-      \ },
-      \ 'component': {
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head',
-      \   'workingDirectory': 'WorkingDirectory',
-      \ },
-\ }
+let g:lightline = { 'colorscheme': 'onehalfdark' }
+
+let g:lightline.subseparator = { 'left': '>', 'right': '|' }
+
+let g:lightline.component = {
+    \ 'totalLine': "%{line('$')}",
+    \ }
+
+let g:lightline.component_function = {
+    \ 'gitbranch': 'fugitive#head',
+    \ 'workingDirectory': 'WorkingDirectory',
+    \ }
+
+let g:lightline.active = {
+    \ 'left': [ [ 'mode' ],
+    \           [ 'gitbranch', 'workingDirectory', 'filename' ],
+    \           [ 'readonly', 'modified' ] ],
+    \ 'right': [ [ 'totalLine' ],
+    \            [ 'lineinfo' ],
+    \            [ 'filetype' ] ] }
+
+let g:lightline.inactive = {
+    \ 'left': [ [ 'filename' ] ],
+    \ 'right': [ [ 'lineinfo' ],
+    \            [ 'percent' ] ] }
+
+let g:lightline.tabline = {
+    \ 'left': [ [ 'tabs' ] ],
+    \ 'right': [ [ 'close' ] ] }
+
+" let g:lightline = {
+"       \ 'colorscheme': 'onehalfdark',
+"       \ 'active': {
+"       \   'left':  [ ['mode'],
+"       \              [ 'workingDirectory', 'gitbranch' ],
+"       \              [ 'readonly', 'filename', 'modified'],
+"       \              [ 'percent' ],
+"       \              [ 'filetype' ] ],
+"       \ },
+"       \ 'component': {
+"       \ },
+"       \ 'component_function': {
+"       \   'gitbranch': 'fugitive#head',
+"       \   'workingDirectory': 'WorkingDirectory',
+"       \ },
+" \ }
 
 
 function! WorkingDirectory()
