@@ -195,6 +195,9 @@ let g:sneak#label = 1
 
 " => options
 
+set noerrorbells
+set novisualbell
+
 " true color
 set termguicolors
 
@@ -405,3 +408,16 @@ function! FoldLevel(lnum)
   return '='
 endfunction
 
+
+" => Terminal
+
+let $GIT_EDITOR = 'nvr -cc split --remote-wait'
+
+augroup term_cmd
+  autocmd!
+  " for answering nvr remote
+  autocmd FileType gitcommit set bufhidden=delete
+
+  autocmd TermOpen * startinsert
+  autocmd TermClose * bd!
+augroup END
