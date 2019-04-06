@@ -66,6 +66,11 @@ call plug#end()
 
 " => plugin Config
 
+" -> startify
+
+let g:startify_change_to_dir = 0
+let g:startify_change_to_vcs_root = 1
+
 " -> coc.nvim
 
 let g:coc_global_extensions = [
@@ -161,7 +166,7 @@ let g:lightline = {
       \ 'colorscheme': 'onehalfdark',
       \ 'active': {
       \   'left':  [ ['mode'],
-      \              [ 'gitbranch' ],
+      \              [ 'workingDirectory', 'gitbranch' ],
       \              [ 'readonly', 'filename', 'modified'],
       \              [ 'percent' ],
       \              [ 'filetype' ] ],
@@ -179,19 +184,22 @@ function! WorkingDirectory()
  return strpart(getcwd(), strridx(getcwd(), '/') + 1)
 endfunction
 
-" -> Emmet
+" -> emmet
 
 let g:user_emmet_leader_key='<c-,>'
 " let g:user_emmet_mode='i'
 " inoremap jm <C-y>,
 " only enable normal mode functions
 
-" -> Prettier
+" -> prettier
 
 let g:prettier#config#parser = 'babel'
 
 let g:sneak#label = 1
 
+" -> gitgutter
+
+autocmd BufEnter * GitGutterAll
 
 " => options
 
