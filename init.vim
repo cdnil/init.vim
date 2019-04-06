@@ -23,7 +23,6 @@ Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
 Plug 'Shougo/denite.nvim'
-Plug 'sonph/onehalf', { 'rtp': 'vim/' }
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
@@ -36,6 +35,7 @@ call plug#end()
 
 " => Plugin Trash
 
+" Plug 'sonph/onehalf', { 'rtp': 'vim/' }
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'mattn/emmet-vim'
 " Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
@@ -70,6 +70,7 @@ call plug#end()
 
 let g:startify_change_to_dir = 0
 let g:startify_change_to_vcs_root = 1
+autocmd! TabNewEntered * Startify
 
 " -> coc.nvim
 
@@ -160,6 +161,7 @@ let NERDTreeShowHidden=1
 nnoremap <silent><leader>1 :NERDTreeToggle<cr>
 nnoremap <leader>nr :NERDTreeFind<cr>
 
+
 " -> lightline
 
 let g:lightline = { 'colorscheme': 'onehalfdark' }
@@ -183,36 +185,22 @@ let g:lightline.active = {
     \            [ 'lineinfo' ],
     \            [ 'filetype' ] ] }
 
+
 let g:lightline.inactive = {
-    \ 'left': [ [ 'filename' ] ],
-    \ 'right': [ [ 'lineinfo' ],
-    \            [ 'percent' ] ] }
+    \ 'left': [ [ 'filename' ],
+    \           [ 'readonly', 'modified' ] ],
+    \ 'right': [ [ 'totalLine' ],
+    \            [ 'lineinfo' ],
+    \            [ 'filetype' ] ] }
 
 let g:lightline.tabline = {
     \ 'left': [ [ 'tabs' ] ],
-    \ 'right': [ [ 'close' ] ] }
-
-" let g:lightline = {
-"       \ 'colorscheme': 'onehalfdark',
-"       \ 'active': {
-"       \   'left':  [ ['mode'],
-"       \              [ 'workingDirectory', 'gitbranch' ],
-"       \              [ 'readonly', 'filename', 'modified'],
-"       \              [ 'percent' ],
-"       \              [ 'filetype' ] ],
-"       \ },
-"       \ 'component': {
-"       \ },
-"       \ 'component_function': {
-"       \   'gitbranch': 'fugitive#head',
-"       \   'workingDirectory': 'WorkingDirectory',
-"       \ },
-" \ }
-
+    \ 'right': [ ] }
 
 function! WorkingDirectory()
  return strpart(getcwd(), strridx(getcwd(), '/') + 1)
 endfunction
+
 
 " -> emmet
 
@@ -255,7 +243,6 @@ set clipboard=unnamed
 set number
 
 set cursorline
-hi cursorline guibg=#3c434f
 
 colorscheme onehalfdark
 set signcolumn=yes
@@ -418,12 +405,17 @@ augroup END
 
 " => folding
 
-autocmd BufRead init.vim set foldmethod=expr
-autocmd BufRead init.vim set foldexpr=FoldLevel(v:lnum)
+autocmd BufRead *.vim set foldmethod=expr
+autocmd BufRead *.vim set foldexpr=FoldLevel(v:lnum)
 
 function! FoldLevel(lnum)
+  let firstLine = getline(1)
   let curLine = getline(a:lnum)
   let nextLine = getline(a:lnum + 1)
+
+  if (firstLine !~? '\v^"\s*\=\>')
+    return 0
+  endif
 
   if curLine =~? '\v^"\s*\=\>'
     return 1
