@@ -7,8 +7,6 @@ Plug 'ap/vim-css-color'
 Plug 'idanarye/vim-merginal' "Fugitive extension to manage and merge Git branches
 Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim' "Distraction-free writing
 Plug 'junegunn/gv.vim' " a git commit browser
 Plug 'justinmk/vim-sneak' " motion
@@ -18,11 +16,12 @@ Plug 'mhinz/vim-startify' " The fancy start screen for Vim
 Plug 'moll/vim-node'
 Plug 'mxw/vim-jsx'
 Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
-Plug 'neoclide/denite-extra'
+" Plug 'neoclide/denite-extra'
 Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
-Plug 'Shougo/denite.nvim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
@@ -30,11 +29,14 @@ Plug 'tpope/vim-fugitive' " an awesome Git wrapper
 Plug 'tpope/vim-rhubarb' " GitHub extension for fugitive.vim
 Plug 'tpope/vim-surround'
 Plug 'w0rp/ale'
+Plug 'scrooloose/nerdtree'
 
 call plug#end()
 
 " => Plugin Trash
 
+" Plug 'Shougo/denite.nvim'
+" Plug 'Shougo/neomru.vim'
 " Plug 'sonph/onehalf', { 'rtp': 'vim/' }
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'mattn/emmet-vim'
@@ -56,7 +58,6 @@ call plug#end()
 " Plug 'sbdchd/neoformat'
 " Plug 'posva/vim-vue'
 " Plug 'jparise/vim-graphql'
-" Plug 'scrooloose/nerdtree'
 " Plug 'trevordmiller/nova-vim'
 " Plug 'godlygeek/tabular' " text filtering and alignment
 " Plug 'hotoo/pangu.vim' "中文排版自动规范化
@@ -65,6 +66,15 @@ call plug#end()
 " Plug 'felixhummel/setcolors.vim'
 
 " => plugin Config
+
+" -> Denite
+
+" call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+" call denite#custom#var('file/rec/git', 'command',
+"       \ ['git', 'ls-files', '-co', '--exclude-standard'])
+" nnoremap <silent> <C-p> :<C-u>Denite
+"       \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`<CR>
+
 
 " -> startify
 
@@ -95,9 +105,6 @@ let g:startify_lists = [
         \ { 'type': 'files',     'header': ['   MRU']            },
         \ ]
 
-
-autocmd! TabNewEntered * Startify
-
 " -> coc.nvim
 
 let g:coc_global_extensions = [
@@ -114,7 +121,9 @@ let g:coc_global_extensions = [
 " -> fzf
 
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
-let g:fzf_layout = { 'window': 'enew' } " `window` neovim only
+" let g:fzf_layout = { 'window': 'enew' } " `window` neovim only
+
+nnoremap <silent><C-p> :FZF<cr>
 
 " hide statusline
 "
@@ -155,8 +164,8 @@ function! LinterStatus() abort
     let l:all_non_errors = l:counts.total - l:all_errors
 
     return l:counts.total == 0 ? 'OK' : printf(
-    \   '%dW %dE',
-    \   all_non_errors,
+    \   '%dW %dE'k
+    \   all_non_errorsk
     \   all_errors
     \)
 endfunction
@@ -184,19 +193,23 @@ let g:ctrlp_custom_ignore = {
 " -> NERDTree
 
 let NERDTreeShowHidden=1
-nnoremap <silent><leader>1 :NERDTreeToggle<cr>
-nnoremap <leader>nr :NERDTreeFind<cr>
+nnoremap <silent><leader>ee :NERDTreeToggle<cr>
+" reveal current buffer in NERDTree
+nnoremap <leader>er :NERDTreeFind<cr>
 
 
 " -> lightline
 
 let g:lightline = { 'colorscheme': 'onehalfdark' }
 
-let g:lightline.subseparator = { 'left': '>', 'right': '|' }
-
 let g:lightline.component = {
     \ 'totalLine': "%{line('$')}",
     \ }
+
+
+" let g:lightline.subseparator = { 'left': '▪︎', 'right': '|' }
+let g:lightline.subseparator = { 'left': '‣', 'right': '|' }
+
 
 let g:lightline.component_function = {
     \ 'gitbranch': 'fugitive#head',
@@ -282,6 +295,8 @@ set splitbelow
 hi VertSplit guibg=bg
 
 set fillchars=vert:\│
+" hide tilde ~ char, endwith one whitespace
+set fillchars=eob:\ 
 
 set expandtab
 
@@ -293,6 +308,11 @@ set softtabstop=2
 set shiftwidth=2
 
 set ignorecase
+
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
+" let g:netrw_browse_split = 2
+" let g:netrw_winsize = 25
 
 " => Mappings
 
@@ -323,7 +343,7 @@ nnoremap <silent><leader>nh :nohl<cr>
 nnoremap = <C-w>>
 nnoremap - <C-w><
 
-nnoremap <C-p> :<C-u>FZF<CR>
+" nnoremap <C-p> :<C-u>FZF<CR>
 
 vnoremap // y/<C-r>"<cr>
 
@@ -427,8 +447,6 @@ augroup ft_help
   autocmd FileType help set number
 augroup END
 
-" => Abbreviations
-
 " => folding
 
 autocmd BufRead *.vim set foldmethod=expr
@@ -477,3 +495,5 @@ augroup term_cmd
   autocmd TermOpen * startinsert
   autocmd TermClose * bd!
 augroup END
+
+" => Abbreviations
