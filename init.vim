@@ -343,8 +343,6 @@ nnoremap <silent><leader>nh :nohl<cr>
 nnoremap = <C-w>>
 nnoremap - <C-w><
 
-" nnoremap <C-p> :<C-u>FZF<CR>
-
 vnoremap // y/<C-r>"<cr>
 
 autocmd BufNewFile,BufRead *.vue set filetype=html
@@ -390,26 +388,22 @@ endif
 
 
 " http://learnvimscriptthehardway.stevelosh.com/chapters/33.html
-nnoremap <leader>g :silent set <SID>operatorfunc=GrepOperator<cr>g@
-vnoremap <leader>g :<c-u>call <SID>GrepOperator(visualmode())<cr>
+" <leader>giw, etc.
+nnoremap <silent><leader>g :<c-u>set operatorfunc=GrepOperator<cr>g@
+vnoremap <silent><leader>g :<c-u>call GrepOperator(visualmode())<cr>
 
-function! s:GrepOperator(type)
-  let saved_unnamed_register = @@
+function! GrepOperator(type)
+    if a:type ==# 'v'
+        normal! `<v`>y
+    elseif a:type ==# 'char'
+        normal! `[v`]y
+    else
+        return
+    endif
 
-  if a:type ==# 'v'
-    normal! `<v`>y
-  elseif a:type ==# 'char'
-    normal! `[y`]
-  else
-    return
-  endif
+    echo 'Searching ' . @@
 
-  silent execute "grep! -R " . shellescape(@@) . " ."
-  copen
-
-  " restore unnamed register
-  let @@ = saved_unnamed_register
-
+    silent execute "Ag " . @@
 endfunction
 
 " http://learnvimscriptthehardway.stevelosh.com/chapters/38.html
