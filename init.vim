@@ -491,3 +491,8 @@ augroup term_cmd
 augroup END
 
 " => Abbreviations
+
+
+" => Customize Commands
+
+command! -nargs=1 -bar -bang Go silent execute '!open https://www.google.com/search\?q=\' . <q-args>
