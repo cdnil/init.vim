@@ -67,7 +67,7 @@ call plug#end()
 
 " => plugin Config
 
-" -> Denite
+" ---> Denite
 
 " call denite#custom#alias('source', 'file/rec/git', 'file/rec')
 " call denite#custom#var('file/rec/git', 'command',
@@ -76,7 +76,7 @@ call plug#end()
 "       \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`<CR>
 
 
-" -> startify
+" ---> startify
 
 let g:startify_change_to_dir = 0
 let g:startify_change_to_vcs_root = 1
@@ -105,7 +105,7 @@ let g:startify_lists = [
         \ { 'type': 'files',     'header': ['   MRU']            },
         \ ]
 
-" -> coc.nvim
+" ---> coc.nvim
 
 let g:coc_global_extensions = [
 \ 'coc-tsserver',
@@ -118,7 +118,7 @@ let g:coc_global_extensions = [
 \ 'coc-snippets',
 \ ]
 
-" -> fzf
+" ---> fzf
 
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 " let g:fzf_layout = { 'window': 'enew' } " `window` neovim only
@@ -174,12 +174,12 @@ let g:ale_sign_error = '●' " Less aggressive than the default '>>'
 let g:ale_sign_warning = '.'
 let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
 
-" -> deoplete
+" ---> deoplete
 
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1
 
-" -> ctrlp.vim
+" ---> ctrlp.vim
 
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:30,results:30'
 let g:ctrlp_show_hidden = 1
@@ -190,7 +190,7 @@ let g:ctrlp_custom_ignore = {
       \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$\|\.DS_Store$' }
 
 
-" -> NERDTree
+" ---> NERDTree
 
 let NERDTreeShowHidden=1
 nnoremap <silent><leader>ee :NERDTreeToggle<cr>
@@ -198,7 +198,7 @@ nnoremap <silent><leader>ee :NERDTreeToggle<cr>
 nnoremap <leader>er :NERDTreeFind<cr>
 
 
-" -> lightline
+" ---> lightline
 
 let g:lightline = { 'colorscheme': 'onehalfdark' }
 
@@ -241,20 +241,20 @@ function! WorkingDirectory()
 endfunction
 
 
-" -> emmet
+" ---> emmet
 
 let g:user_emmet_leader_key='<c-,>'
 " let g:user_emmet_mode='i'
 " inoremap jm <C-y>,
 " only enable normal mode functions
 
-" -> prettier
+" ---> prettier
 
 let g:prettier#config#parser = 'babel'
 
 let g:sneak#label = 1
 
-" -> gitgutter
+" ---> gitgutter
 
 autocmd BufEnter * GitGutterAll
 
@@ -450,25 +450,27 @@ function! FoldLevel(lnum)
   let firstLine = getline(1)
   let curLine = getline(a:lnum)
   let nextLine = getline(a:lnum + 1)
+  let expr1 = '\v^"\s*\=\>'
+  let expr2 = '\v^"\s*\-\-\-\>'
 
-  if (firstLine !~? '\v^"\s*\=\>')
+  if firstLine !~? expr1
     return 0
   endif
 
-  if curLine =~? '\v^"\s*\=\>'
+  if curLine =~? expr1
     return 1
   endif
 
-  if curLine =~? '\v^"\s*\-\>'
+  if curLine =~? expr2
     return 2
   endif
 
   " empty line
   if curLine =~? '\v^\s*$'
-    if nextLine =~? '\v^"\s\=\>'
+    if nextLine =~? expr1
       return 0
     endif
-    if nextLine =~? '\v^"\s\-\>'
+    if nextLine =~? expr2
       return 1
     endif
   endif
