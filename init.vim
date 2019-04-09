@@ -11,7 +11,6 @@ Plug 'junegunn/goyo.vim' "Distraction-free writing
 Plug 'junegunn/gv.vim' " a git commit browser
 Plug 'justinmk/vim-sneak' " motion
 Plug 'leafgarland/typescript-vim' " Typescript syntax files
-Plug 'majutsushi/tagbar'
 Plug 'mhinz/vim-startify' " The fancy start screen for Vim
 Plug 'moll/vim-node'
 Plug 'mxw/vim-jsx'
@@ -30,12 +29,14 @@ Plug 'tpope/vim-rhubarb' " GitHub extension for fugitive.vim
 Plug 'tpope/vim-surround'
 Plug 'w0rp/ale'
 Plug 'scrooloose/nerdtree'
+Plug 'mileszs/ack.vim'
+Plug 'Shougo/denite.nvim'
 
 call plug#end()
 
 " => Plugin Trash
 
-" Plug 'Shougo/denite.nvim'
+" Plug 'majutsushi/tagbar'
 " Plug 'Shougo/neomru.vim'
 " Plug 'sonph/onehalf', { 'rtp': 'vim/' }
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -68,6 +69,9 @@ call plug#end()
 " => plugin Config
 
 " ---> Denite
+
+call denite#custom#var('file/rec', 'command',
+      \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
 
 " call denite#custom#alias('source', 'file/rec/git', 'file/rec')
 " call denite#custom#var('file/rec/git', 'command',
@@ -125,22 +129,16 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 nnoremap <silent><C-p> :FZF<cr>
 
-" hide statusline
-"
-" autocmd! FileType fzf
-" autocmd  FileType fzf set laststatus=0 noshowmode noruler
-"   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-
-" -> pangu
+" ---> pangu
 
 "autocmd BufWritePre *.markdown,*.md,*.text,*.txt,*.wiki,*.cnx call PanGuSpacing()
 
-" -> ultisnips
+" ---> ultisnips
 
 " let g:UltiSnipsExpandTrigger='<tab>'
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/UltiSnips']
 
-" -> ale
+" ---> ale
 
 " let g:ale_linters = {
 " \   'javascript': ['eslint'],
@@ -218,8 +216,8 @@ let g:lightline.component_function = {
 
 let g:lightline.active = {
     \ 'left': [ [ 'mode' ],
-    \           [ 'gitbranch', 'workingDirectory', 'filename' ],
-    \           [ 'readonly', 'modified' ] ],
+    \           [ 'gitbranch', 'workingDirectory' ],
+    \           [ 'filename', 'readonly', 'modified' ] ],
     \ 'right': [ [ 'totalLine' ],
     \            [ 'lineinfo' ],
     \            [ 'filetype' ] ] }
@@ -257,6 +255,8 @@ let g:sneak#label = 1
 " ---> gitgutter
 
 autocmd BufEnter * GitGutterAll
+nnoremap <leader>hj :GitGutterNextHunk<cr>
+nnoremap <leader>hk :GitGutterPrevHunk<cr>
 
 " => options
 
@@ -319,10 +319,8 @@ let g:netrw_banner = 0
 " map leader to space
 let mapleader=" "
 
-xnoremap <  <gv
-xnoremap >  >gv
-
 nnoremap <leader>z :Goyo<cr>
+nnoremap <leader>w :w<cr>
 
 " edit vimrc file
 nnoremap <leader>ev :vs $MYVIMRC<cr>
@@ -348,7 +346,6 @@ vnoremap // y/<C-r>"<cr>
 autocmd BufNewFile,BufRead *.vue set filetype=html
 autocmd BufNewFile,BufRead *.wxml set filetype=html
 autocmd FocusGained * :checktime
-
 
 
 "-------------------------------------------------------------------------------
@@ -424,6 +421,12 @@ function! QuickfixToggle()
 endfunction
 
 " => Autocmds
+
+" augroup AutoSaveAndRestoreView
+"   autocmd!
+"   autocmd BufWinLeave * mkview
+"   autocmd BufWinEnter * silent loadview
+" augroup END<Paste>
 
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.md set wrap linebreak
