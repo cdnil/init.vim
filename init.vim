@@ -7,35 +7,36 @@ Plug 'ap/vim-css-color'
 Plug 'idanarye/vim-merginal' "Fugitive extension to manage and merge Git branches
 Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim' "Distraction-free writing
 Plug 'junegunn/gv.vim' " a git commit browser
 Plug 'justinmk/vim-sneak' " motion
 Plug 'leafgarland/typescript-vim' " Typescript syntax files
-Plug 'mhinz/vim-startify' " The fancy start screen for Vim
+Plug 'mileszs/ack.vim'
 Plug 'moll/vim-node'
 Plug 'mxw/vim-jsx'
 Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
-" Plug 'neoclide/denite-extra'
 Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
+Plug 'scrooloose/nerdtree'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
+Plug 'Shougo/denite.nvim'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive' " an awesome Git wrapper
+Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-rhubarb' " GitHub extension for fugitive.vim
 Plug 'tpope/vim-surround'
 Plug 'w0rp/ale'
-Plug 'scrooloose/nerdtree'
-Plug 'mileszs/ack.vim'
-Plug 'Shougo/denite.nvim'
 
 call plug#end()
 
 " => Plugin Trash
 
+" Plug 'neoclide/denite-extra'
+" Plug 'mhinz/vim-startify' " The fancy start screen for Vim
 " Plug 'majutsushi/tagbar'
 " Plug 'Shougo/neomru.vim'
 " Plug 'sonph/onehalf', { 'rtp': 'vim/' }
@@ -78,36 +79,6 @@ call denite#custom#var('file/rec', 'command',
 "       \ ['git', 'ls-files', '-co', '--exclude-standard'])
 " nnoremap <silent> <C-p> :<C-u>Denite
 "       \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`<CR>
-
-
-" ---> startify
-
-let g:startify_change_to_dir = 0
-let g:startify_change_to_vcs_root = 1
-let g:startify_bookmarks = [ {'c': '~/.config/nvim/init.vim'}, '~/.zshrc' ]
-let g:startify_enable_special = 0
-
-let g:startify_custom_header = [
-        \ '   +---------------------------------------------------------------------+   ', 
-        \ '   |      ___  _  _    _    ___  ___     ___  ___   ___    _    ___      |   ', 
-        \ '   |     / __|| || |  /_\  | _ \| __|   |_ _||   \ | __|  /_\  / __|     |   ',
-        \ '   |     \__ \| __ | / _ \ |  _/| _|     | | | |) || _|  / _ \ \__ \     |   ',
-        \ '   |     |___/|_||_|/_/ \_\|_|  |___|   |___||___/ |___|/_/ \_\|___/     |   ',
-        \ '   |          ___  _  _  _____  ___       ___  ___   ___   ___           |   ',
-        \ '   |         |_ _|| \| ||_   _|/ _ \     / __|/ _ \ |   \ | __|          |   ', 
-        \ '   |          | | | .` |  | | | (_) |   | (__| (_) || |) || _|           |   ', 
-        \ '   |         |___||_|\_|  |_|  \___/     \___|\___/ |___/ |___|          |   ', 
-        \ '   |                                                                     |   ', 
-        \ '   +---------------------------------------------------------------------+   ', 
-        \ ]
-
-let g:startify_lists = [
-        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-        \ { 'type': 'sessions',  'header': ['   Sessions']       },
-        \ { 'type': 'commands',  'header': ['   Commands']       },
-        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
-        \ { 'type': 'files',     'header': ['   MRU']            },
-        \ ]
 
 " ---> coc.nvim
 
@@ -193,7 +164,7 @@ let g:ctrlp_custom_ignore = {
 let NERDTreeShowHidden=1
 nnoremap <silent><leader>ee :NERDTreeToggle<cr>
 " reveal current buffer in NERDTree
-nnoremap <leader>er :NERDTreeFind<cr>
+nnoremap <silent><leader>er :NERDTreeFind<cr>
 
 
 " ---> lightline
@@ -258,6 +229,13 @@ autocmd BufEnter * GitGutterAll
 nnoremap <leader>hj :GitGutterNextHunk<cr>
 nnoremap <leader>hk :GitGutterPrevHunk<cr>
 
+" ---> goyo
+
+let g:goyo_height = '100%'
+let g:goyo_margin_top = 0
+let g:goyo_margin_bottom = 0
+nnoremap <leader>z :Goyo<cr>
+
 " => options
 
 set noerrorbells
@@ -319,11 +297,10 @@ let g:netrw_banner = 0
 " map leader to space
 let mapleader=" "
 
-nnoremap <leader>z :Goyo<cr>
 nnoremap <leader>w :w<cr>
 
 " edit vimrc file
-nnoremap <leader>ev :vs $MYVIMRC<cr>
+nnoremap <leader>ev :e $MYVIMRC<cr>
 
 " source vimrc file
 nnoremap <leader>sv :so $MYVIMRC<cr>
@@ -500,4 +477,4 @@ augroup END
 
 " => Customize Commands
 
-command! -nargs=1 -bar -bang Go silent execute '!open https://www.google.com/search\?q=\' . <q-args>
+command! -nargs=1 Go silent execute '!open https://www.google.com/search\?q=\' . <q-args>
