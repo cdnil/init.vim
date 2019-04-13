@@ -13,10 +13,8 @@ Plug 'junegunn/goyo.vim' "Distraction-free writing
 Plug 'junegunn/gv.vim' " a git commit browser
 Plug 'justinmk/vim-sneak' " motion
 Plug 'leafgarland/typescript-vim' " Typescript syntax files
-Plug 'mileszs/ack.vim'
 Plug 'moll/vim-node'
 Plug 'mxw/vim-jsx'
-Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
 Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
 Plug 'scrooloose/nerdtree'
@@ -26,15 +24,19 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive' " an awesome Git wrapper
-Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-rhubarb' " GitHub extension for fugitive.vim
 Plug 'tpope/vim-surround'
 Plug 'w0rp/ale'
+Plug 'tpope/vim-obsession'
+Plug 'mileszs/ack.vim'
+Plug 'yianwillis/vimcdoc'
 
 call plug#end()
 
 " => Plugin Trash
 
+" Plug 'mhinz/vim-startify' " The fancy start screen for Vim
+" Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
 " Plug 'neoclide/denite-extra'
 " Plug 'mhinz/vim-startify' " The fancy start screen for Vim
 " Plug 'majutsushi/tagbar'
@@ -67,7 +69,75 @@ call plug#end()
 " Plug 'flazz/vim-colorschemes'
 " Plug 'felixhummel/setcolors.vim'
 
+" => options
+
+" hide intro message
+set shortmess+=I
+
+set noerrorbells
+set novisualbell
+
+" true color
+set termguicolors
+
+" hide -- [MODE] -- on the last line, using lightline.vim
+set noshowmode
+
+set nowrap
+
+" for updating gutter
+" https://github.com/airblade/vim-gitgutter#getting-started
+set updatetime=100
+
+" synchronize with system clipboard
+set clipboard=unnamed
+
+" show the line numbers
+set number
+
+set cursorline
+
+colorscheme onehalfdark
+set signcolumn=yes
+
+hi Visual guibg=#407E61
+
+set splitright
+set splitbelow
+
+" vertical split bar style
+hi VertSplit guibg=bg
+
+set fillchars=vert:\ 
+
+" hide tilde ~ char, endwith one whitespace
+set fillchars=eob:\ 
+
+set expandtab
+
+" insert 2 spaces for a tab
+set tabstop=2
+
+set softtabstop=2
+
+set shiftwidth=2
+
+set ignorecase
+
+" map leader to space
+let mapleader=" "
+
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
+" let g:netrw_browse_split = 2
+" let g:netrw_winsize = 25
+
 " => plugin Config
+
+" ---> vimcdoc
+
+" reset helplang, yianwillis/vimcdoc set helplang=cn
+autocmd! VimEnter * set helplang=en
 
 " ---> Denite
 
@@ -81,7 +151,7 @@ call denite#custom#var('file/rec', 'command',
 "       \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`<CR>
 
 " ---> coc.nvim
-
+let g:coc_start_at_startup = 1
 let g:coc_global_extensions = [
 \ 'coc-tsserver',
 \ 'coc-json',
@@ -92,6 +162,7 @@ let g:coc_global_extensions = [
 \ 'coc-emmet',
 \ 'coc-snippets',
 \ ]
+
 
 " ---> fzf
 
@@ -145,8 +216,8 @@ let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
 
 " ---> deoplete
 
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#file#enable_buffer_path = 1
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#file#enable_buffer_path = 1
 
 " ---> ctrlp.vim
 
@@ -225,77 +296,35 @@ let g:sneak#label = 1
 
 " ---> gitgutter
 
-autocmd BufEnter * GitGutterAll
+" autocmd BufEnter * GitGutterAll
 nnoremap <leader>hj :GitGutterNextHunk<cr>
 nnoremap <leader>hk :GitGutterPrevHunk<cr>
 
 " ---> goyo
 
 let g:goyo_height = '100%'
-let g:goyo_margin_top = 0
-let g:goyo_margin_bottom = 0
+let g:goyo_linenr = 1
 nnoremap <leader>z :Goyo<cr>
 
-" => options
+function! s:goyo_enter()
+  " silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  set noshowcmd
+  " set scrolloff=999
+  silent !tmux set status off
+endfunction
 
-set noerrorbells
-set novisualbell
+function! s:goyo_leave()
+  silent !tmux set status on
+  " silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  set showcmd
+  " set scrolloff=5
+endfunction
 
-" true color
-set termguicolors
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
-" hide -- [MODE] -- on the last line, using lightline.vim
-set noshowmode
-
-set nowrap
-
-" for updating gutter
-" https://github.com/airblade/vim-gitgutter#getting-started
-set updatetime=100
-
-" synchronize with system clipboard
-set clipboard=unnamed
-
-" show the line numbers
-set number
-
-set cursorline
-
-colorscheme onehalfdark
-set signcolumn=yes
-
-hi Visual guibg=#407E61
-
-set splitright
-set splitbelow
-
-" vertical split bar style
-hi VertSplit guibg=bg
-
-set fillchars=vert:\│
-" hide tilde ~ char, endwith one whitespace
-set fillchars=eob:\ 
-
-set expandtab
-
-" insert 2 spaces for a tab
-set tabstop=2
-
-set softtabstop=2
-
-set shiftwidth=2
-
-set ignorecase
-
-let g:netrw_liststyle = 3
-let g:netrw_banner = 0
-" let g:netrw_browse_split = 2
-" let g:netrw_winsize = 25
 
 " => Mappings
-
-" map leader to space
-let mapleader=" "
 
 nnoremap <leader>w :w<cr>
 
@@ -407,7 +436,7 @@ endfunction
 
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.md set wrap linebreak
-autocmd BufRead,BufNewFile *.md call deoplete#disable()
+" autocmd BufRead,BufNewFile *.md call deoplete#disable()
 
 " augroup lexical
 "   autocmd!
@@ -478,3 +507,69 @@ augroup END
 " => Customize Commands
 
 command! -nargs=1 Go silent execute '!open https://www.google.com/search\?q=\' . <q-args>
+
+
+" => Welcome Screen
+
+let g:welcome_text = 'Shape ideas into code'
+
+fun! Welcome()
+  " Don't run if: we have commandline arguments, we don't have an empty
+  " buffer, if we've not invoked as vim or gvim, or if we'e start in insert mode
+  if argc() || line2byte('$') != -1 || v:progname !~? '^[-gmnq]\=vim\=x\=\%[\.exe]$' || &insertmode
+    return
+  endif
+
+  " Start a new buffer ...
+  enew
+
+  " ... and set some options for it
+  setlocal
+        \ bufhidden=wipe
+        \ buftype=nofile
+        \ nobuflisted
+        \ nocursorcolumn
+        \ nocursorline
+        \ nolist
+        \ nonumber
+        \ noswapfile
+        \ norelativenumber
+
+  set filetype=welcome
+
+  call Print(get(g:, 'welcome_text', ''))
+
+  " No modifications to this buffer
+  setlocal nomodifiable nomodified
+
+  " When we go to insert mode start a new buffer, and start insert
+  nnoremap <buffer><silent> e :enew<CR>
+  nnoremap <buffer><silent> i :enew <bar> startinsert<CR>
+  nnoremap <buffer><silent> o :enew <bar> startinsert<CR>
+endfun
+
+autocmd VimEnter * call Welcome()
+
+fun! Print(message)
+
+  let padding_top = &lines / 2 - 3
+  while padding_top > 0
+    call append('$', '')
+    let padding_top -= 1
+  endwhile
+
+  let padding_left = (&columns - len(g:welcome_text)) / 2 - 1
+  let text = ''
+  while padding_left > 0
+    let text .= ' '
+    let padding_left -= 1
+  endwhile
+
+  let text .= a:message
+
+  call append('$', text)
+
+  " move the cursor
+  execute "normal! G"
+ 
+endfun
