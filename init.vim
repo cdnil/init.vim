@@ -15,28 +15,28 @@ Plug 'justinmk/vim-sneak' " motion
 Plug 'leafgarland/typescript-vim' " Typescript syntax files
 Plug 'moll/vim-node'
 Plug 'mxw/vim-jsx'
+Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
 Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
 Plug 'scrooloose/nerdtree'
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
 Plug 'Shougo/denite.nvim'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive' " an awesome Git wrapper
+Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-rhubarb' " GitHub extension for fugitive.vim
 Plug 'tpope/vim-surround'
-Plug 'w0rp/ale'
-Plug 'tpope/vim-obsession'
-Plug 'mileszs/ack.vim'
-Plug 'yianwillis/vimcdoc'
+Plug 'yianwillis/vimcdoc' " chinese help
 
 call plug#end()
 
 " => Plugin Trash
 
+" Plug 'w0rp/ale'
+" Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
+" Plug 'mileszs/ack.vim'
 " Plug 'mhinz/vim-startify' " The fancy start screen for Vim
-" Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
 " Plug 'neoclide/denite-extra'
 " Plug 'mhinz/vim-startify' " The fancy start screen for Vim
 " Plug 'majutsushi/tagbar'
@@ -511,65 +511,66 @@ command! -nargs=1 Go silent execute '!open https://www.google.com/search\?q=\' .
 
 " => Welcome Screen
 
-let g:welcome_text = 'Shape ideas into code'
+" let g:welcome_text = 'Shape ideas into code'
 
-fun! Welcome()
-  " Don't run if: we have commandline arguments, we don't have an empty
-  " buffer, if we've not invoked as vim or gvim, or if we'e start in insert mode
-  if argc() || line2byte('$') != -1 || v:progname !~? '^[-gmnq]\=vim\=x\=\%[\.exe]$' || &insertmode
-    return
-  endif
+" fun! Welcome()
+"   " Don't run if: we have commandline arguments, we don't have an empty
+"   " buffer, if we've not invoked as vim or gvim, or if we'e start in insert mode
+"   if argc() || line2byte('$') != -1 || v:progname !~? '^[-gmnq]\=vim\=x\=\%[\.exe]$' || &insertmode
+"     return
+"   endif
 
-  " Start a new buffer ...
-  enew
+"   " Start a new buffer ...
+"   enew
 
-  " ... and set some options for it
-  setlocal
-        \ bufhidden=wipe
-        \ buftype=nofile
-        \ nobuflisted
-        \ nocursorcolumn
-        \ nocursorline
-        \ nolist
-        \ nonumber
-        \ noswapfile
-        \ norelativenumber
+"   " ... and set some options for it
+"   setlocal
+"         \ bufhidden=wipe
+"         \ buftype=nofile
+"         \ nobuflisted
+"         \ nocursorcolumn
+"         \ nocursorline
+"         \ nolist
+"         \ nonumber
+"         \ noswapfile
+"         \ norelativenumber
 
-  set filetype=welcome
+"   set filetype=welcome
 
-  call Print(get(g:, 'welcome_text', ''))
+"   call Print(get(g:, 'welcome_text', ''))
 
-  " No modifications to this buffer
-  setlocal nomodifiable nomodified
+"   " No modifications to this buffer
+"   setlocal nomodifiable nomodified
 
-  " When we go to insert mode start a new buffer, and start insert
-  nnoremap <buffer><silent> e :enew<CR>
-  nnoremap <buffer><silent> i :enew <bar> startinsert<CR>
-  nnoremap <buffer><silent> o :enew <bar> startinsert<CR>
-endfun
+"   " When we go to insert mode start a new buffer, and start insert
+"   nnoremap <buffer><silent> e :enew<CR>
+"   nnoremap <buffer><silent> i :enew <bar> startinsert<CR>
+"   nnoremap <buffer><silent> o :enew <bar> startinsert<CR>
+"   " autocmd! BufLeave * if &ft ==? 'welcome' | :bd | endif
+" endfun
 
-autocmd VimEnter * call Welcome()
+" autocmd VimEnter * call Welcome()
 
-fun! Print(message)
+" fun! Print(message)
 
-  let padding_top = &lines / 2 - 3
-  while padding_top > 0
-    call append('$', '')
-    let padding_top -= 1
-  endwhile
+"   let padding_top = &lines / 2 - 3
+"   while padding_top > 0
+"     call append('$', '')
+"     let padding_top -= 1
+"   endwhile
 
-  let padding_left = (&columns - len(g:welcome_text)) / 2 - 1
-  let text = ''
-  while padding_left > 0
-    let text .= ' '
-    let padding_left -= 1
-  endwhile
+"   let padding_left = (&columns - len(g:welcome_text)) / 2 - 1
+"   let text = ''
+"   while padding_left > 0
+"     let text .= ' '
+"     let padding_left -= 1
+"   endwhile
 
-  let text .= a:message
+"   let text .= a:message
 
-  call append('$', text)
+"   call append('$', text)
 
-  " move the cursor
-  execute "normal! G"
+"   " move the cursor
+"   execute "normal! G"
  
-endfun
+" endfun
