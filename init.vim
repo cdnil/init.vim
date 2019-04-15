@@ -102,6 +102,8 @@ set signcolumn=yes
 
 hi Visual guibg=#407E61
 
+set fillchars+=vert:\│
+
 set splitright
 set splitbelow
 
@@ -318,6 +320,8 @@ function! s:goyo_leave()
   " silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
   set showcmd
   " set scrolloff=5
+  " redraw fillchars=vert:\
+  hi VertSplit guibg=bg
 endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
