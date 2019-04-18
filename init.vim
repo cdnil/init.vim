@@ -11,14 +11,12 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim' "Distraction-free writing
 Plug 'junegunn/gv.vim' " a git commit browser
-Plug 'justinmk/vim-sneak' " motion
 Plug 'leafgarland/typescript-vim' " Typescript syntax files
 Plug 'moll/vim-node'
 Plug 'mxw/vim-jsx'
 Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
 Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
-Plug 'scrooloose/nerdtree'
 Plug 'Shougo/denite.nvim'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'terryma/vim-multiple-cursors'
@@ -28,14 +26,20 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-rhubarb' " GitHub extension for fugitive.vim
 Plug 'tpope/vim-surround'
 Plug 'yianwillis/vimcdoc' " chinese help
+Plug 'henrik/vim-indexed-search'
 
 call plug#end()
 
+
 " => Plugin Trash
 
+" Plug 'romainl/vim-qf'
+" Plug 'mileszs/ack.vim'
+" Plug 'ap/vim-buftabline'
+" Plug 'scrooloose/nerdtree'
+" Plug 'justinmk/vim-sneak' " motion
 " Plug 'w0rp/ale'
 " Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
-" Plug 'mileszs/ack.vim'
 " Plug 'mhinz/vim-startify' " The fancy start screen for Vim
 " Plug 'neoclide/denite-extra'
 " Plug 'mhinz/vim-startify' " The fancy start screen for Vim
@@ -70,6 +74,8 @@ call plug#end()
 " Plug 'felixhummel/setcolors.vim'
 
 " => options
+
+packadd cfilter
 
 " hide intro message
 set shortmess+=I
@@ -110,11 +116,6 @@ set splitbelow
 " vertical split bar style
 hi VertSplit guibg=bg
 
-set fillchars=vert:\ 
-
-" hide tilde ~ char, endwith one whitespace
-set fillchars=eob:\ 
-
 set expandtab
 
 " insert 2 spaces for a tab
@@ -130,11 +131,28 @@ set ignorecase
 let mapleader=" "
 
 let g:netrw_liststyle = 3
-let g:netrw_banner = 0
+let g:netrw_banner = 1
 " let g:netrw_browse_split = 2
 " let g:netrw_winsize = 25
 
+if executable('ag')
+  " set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=ag\ --vimgrep\ $*
+  " set grepformat=%f:%l:%c:%m
+endif
+
 " => plugin Config
+
+" ---> vim-qf
+
+let g:qf_mapping_ack_style = 1
+let g:qf_auto_open_quickfix = 0
+let g:qf_auto_open_loclist = 0
+
+" ---> ack
+
+let g:ackprg = "ag --vimgrep"
+let g:ackhighlight = 0
 
 " ---> vimcdoc
 
@@ -143,8 +161,8 @@ autocmd! VimEnter * set helplang=en
 
 " ---> Denite
 
-call denite#custom#var('file/rec', 'command',
-      \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+" call denite#custom#var('file/rec', 'command',
+"       \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
 
 " call denite#custom#alias('source', 'file/rec/git', 'file/rec')
 " call denite#custom#var('file/rec/git', 'command',
@@ -169,9 +187,26 @@ let g:coc_global_extensions = [
 " ---> fzf
 
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
-" let g:fzf_layout = { 'window': 'enew' } " `window` neovim only
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:toggle-all --reverse --height=10%'
+let g:fzf_nvim_statusline = 0
+let g:fzf_layout = {'down': '20%'}
+nnoremap <silent><leader>f :FZF<cr>
+nnoremap <silent><leader>gg :Ag<cr>
 
-nnoremap <silent><C-p> :FZF<cr>
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+endfunction
+
+let g:fzf_action = {
+      \ 'ctrl-q': function('s:build_quickfix_list'),
+      \ 'ctrl-t': 'tab split',
+      \ 'ctrl-x': 'split',
+      \ 'ctrl-v': 'vsplit' }
+
+let g:fzf_colors = { 
+      \ 'header':  ['fg', 'Comment'] }
+
 
 " ---> pangu
 
@@ -320,6 +355,7 @@ function! s:goyo_leave()
   " silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
   set showcmd
   " set scrolloff=5
+  
   " redraw fillchars=vert:\
   hi VertSplit guibg=bg
 endfunction
@@ -357,6 +393,15 @@ autocmd BufNewFile,BufRead *.vue set filetype=html
 autocmd BufNewFile,BufRead *.wxml set filetype=html
 autocmd FocusGained * :checktime
 
+nnoremap <leader>nb :bnext<cr>
+nnoremap <leader>pb :bprevious<cr>
+
+nnoremap <leader>nc :cnext<cr>
+nnoremap <leader>pc :cprevious<cr>
+
+" nnoremap <leader>ol :lopen<cr>
+nnoremap <leader>nl :lnext<cr>
+nnoremap <leader>pl :lprevious<cr>
 
 "-------------------------------------------------------------------------------
 " = Terminal
