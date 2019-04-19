@@ -2,39 +2,55 @@
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'airblade/vim-gitgutter'
-Plug 'ap/vim-css-color'
-Plug 'idanarye/vim-merginal' "Fugitive extension to manage and merge Git branches
-Plug 'itchyny/lightline.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'junegunn/goyo.vim' "Distraction-free writing
-Plug 'junegunn/gv.vim' " a git commit browser
-Plug 'leafgarland/typescript-vim' " Typescript syntax files
-Plug 'moll/vim-node'
-Plug 'mxw/vim-jsx'
-Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
-Plug 'pangloss/vim-javascript'
+" general
+
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
-Plug 'Shougo/denite.nvim'
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'yianwillis/vimcdoc' " chinese help
+
+" finder
+
+Plug 'tpope/vim-vinegar' " Combine with netrw to create a delicious salad dressing
+Plug 'mileszs/ack.vim'
+
+" ui
+Plug 'itchyny/lightline.vim'
+Plug 'junegunn/goyo.vim' "Distraction-free writing
+
+" git
+Plug 'airblade/vim-gitgutter'
+Plug 'idanarye/vim-merginal' "Fugitive extension to manage and merge Git branches
+Plug 'tpope/vim-rhubarb' " GitHub extension for fugitive.vim
+Plug 'tpope/vim-fugitive' " an awesome Git wrapper
+Plug 'junegunn/gv.vim' " a git commit browser
+
+" editing
+
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive' " an awesome Git wrapper
-Plug 'tpope/vim-obsession'
-Plug 'tpope/vim-rhubarb' " GitHub extension for fugitive.vim
 Plug 'tpope/vim-surround'
-Plug 'yianwillis/vimcdoc' " chinese help
-Plug 'henrik/vim-indexed-search'
+Plug 'jiangmiao/auto-pairs'
+
+" frontend 
+
+Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'ap/vim-css-color'
+Plug 'pangloss/vim-javascript'
+Plug 'moll/vim-node'
+Plug 'mxw/vim-jsx'
 
 call plug#end()
 
 
 " => Plugin Trash
 
+" Plug 'tpope/vim-obsession' " continuously updated session files
+" Plug 'henrik/vim-indexed-search'
+" Plug 'Shougo/denite.nvim'
+" Plug 'wincent/command-t'
+" Plug 'junegunn/fzf'
+" Plug 'junegunn/fzf.vim'
 " Plug 'romainl/vim-qf'
-" Plug 'mileszs/ack.vim'
 " Plug 'ap/vim-buftabline'
 " Plug 'scrooloose/nerdtree'
 " Plug 'justinmk/vim-sneak' " motion
@@ -90,6 +106,7 @@ set termguicolors
 set noshowmode
 
 set nowrap
+set linebreak
 
 " for updating gutter
 " https://github.com/airblade/vim-gitgutter#getting-started
@@ -187,8 +204,9 @@ let g:coc_global_extensions = [
 " ---> fzf
 
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
-let $FZF_DEFAULT_OPTS = '--bind ctrl-a:toggle-all --reverse --height=10%'
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:toggle-all --layout=reverse --height=10% --no-bold --prompt="  "'
 let g:fzf_nvim_statusline = 0
+let g:fzf_statusline = 0
 let g:fzf_layout = {'down': '20%'}
 nnoremap <silent><leader>f :FZF<cr>
 nnoremap <silent><leader>gg :Ag<cr>
@@ -204,8 +222,21 @@ let g:fzf_action = {
       \ 'ctrl-x': 'split',
       \ 'ctrl-v': 'vsplit' }
 
-let g:fzf_colors = { 
-      \ 'header':  ['fg', 'Comment'] }
+" let g:fzf_colors = { 
+"       \ 'fg':      ['fg', 'Directory'],
+"       \ 'bg':      ['bg', 'Normal'],
+"       \ 'hl':      ['fg', 'PreProc'],
+"       \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+"       \ 'bg+':     ['bg', 'Normal', 'CursorColumn'],
+"       \ 'gutter':  ['bg', 'Normal'],
+"       \ 'hl+':     ['fg', 'PreProc'],
+"       \ 'info':    ['fg', 'PreProc'],
+"       \ 'border':  ['fg', 'Ignore'],
+"       \ 'prompt':  ['fg', 'Directory'],
+"       \ 'pointer': ['fg', 'Ignore'],
+"       \ 'marker':  ['fg', 'Keyword'],
+"       \ 'spinner': ['fg', 'Label'],
+"       \ 'header':  ['fg', 'Comment'] }
 
 
 " ---> pangu
@@ -409,7 +440,7 @@ nnoremap <leader>pl :lprevious<cr>
 "-------------------------------------------------------------------------------
 
 " open a new terminal window
-nnoremap <leader>t :vsplit \| term<cr>
+" nnoremap <leader>t :vsplit \| term<cr>
 
 " exit terminal insert mode
 tnoremap <Esc> <C-\><C-n>
