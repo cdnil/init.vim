@@ -334,6 +334,7 @@ let g:sneak#label = 1
 " ---> gitgutter
 
 " autocmd BufEnter * GitGutterAll
+autocmd BufWritePost,WinEnter * GitGutter
 nnoremap <leader>hj :GitGutterNextHunk<cr>
 nnoremap <leader>hk :GitGutterPrevHunk<cr>
 
