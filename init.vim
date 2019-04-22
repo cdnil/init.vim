@@ -3,14 +3,12 @@
 call plug#begin('~/.vim/plugged')
 
 " general
-
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
 Plug 'yianwillis/vimcdoc' " chinese help
 
 " finder
-
-Plug 'tpope/vim-vinegar' " Combine with netrw to create a delicious salad dressing
-Plug 'mileszs/ack.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
 " ui
 Plug 'itchyny/lightline.vim'
@@ -24,19 +22,17 @@ Plug 'tpope/vim-fugitive' " an awesome Git wrapper
 Plug 'junegunn/gv.vim' " a git commit browser
 
 " editing
-
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 
 " frontend 
-
 Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'ap/vim-css-color'
-Plug 'pangloss/vim-javascript'
 Plug 'moll/vim-node'
+Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 
 call plug#end()
@@ -44,12 +40,16 @@ call plug#end()
 
 " => Plugin Trash
 
+" Plug 'mileszs/ack.vim'
+" Plug 'neoclide/vim-jsx-improve'
+" Plug 'tpope/vim-vinegar' " Combine with netrw to create a delicious salad dressing
+" Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'tpope/vim-dadbod'
+" Plug 'wincent/ferret' " Enhanced multi-file search for Vim 
+" Plug 'wincent/command-t'
 " Plug 'tpope/vim-obsession' " continuously updated session files
 " Plug 'henrik/vim-indexed-search'
 " Plug 'Shougo/denite.nvim'
-" Plug 'wincent/command-t'
-" Plug 'junegunn/fzf'
-" Plug 'junegunn/fzf.vim'
 " Plug 'romainl/vim-qf'
 " Plug 'ap/vim-buftabline'
 " Plug 'scrooloose/nerdtree'
@@ -75,7 +75,6 @@ call plug#end()
 " Plug 'honza/vim-snippets' " default snippets
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
-" Plug 'ctrlpvim/ctrlp.vim'
 " Plug 'scrooloose/nerdcommenter'
 " Plug 'vim-syntastic/syntastic' "Syntax checking hacks for vim
 " Plug 'othree/yajs.vim' "Yet Another JavaScript Syntax for Vim
@@ -90,6 +89,9 @@ call plug#end()
 " Plug 'felixhummel/setcolors.vim'
 
 " => options
+
+set path+=**                                                                    
+set wildignore+=**/node_modules/** 
 
 packadd cfilter
 
@@ -148,9 +150,15 @@ set ignorecase
 let mapleader=" "
 
 let g:netrw_liststyle = 3
-let g:netrw_banner = 1
-" let g:netrw_browse_split = 2
-" let g:netrw_winsize = 25
+let g:netrw_banner = 0
+let g:netrw_browse_split = 4
+let g:netrw_winsize = 20
+let g:netrw_altv = 1
+
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd VimEnter * :Vexplore
+" augroup END
 
 if executable('ag')
   " set grepprg=ag\ --nogroup\ --nocolor
@@ -168,8 +176,12 @@ let g:qf_auto_open_loclist = 0
 
 " ---> ack
 
-let g:ackprg = "ag --vimgrep"
-let g:ackhighlight = 0
+" let g:ackprg = "ag --vimgrep"
+" let g:ackhighlight = 1
+" let g:ack_use_cword_for_empty_search = 0
+
+" nnoremap <leader>f :AckFile!<space>
+" nnoremap <leader>gg :Ack!<space>
 
 " ---> vimcdoc
 
@@ -221,6 +233,25 @@ let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
       \ 'ctrl-x': 'split',
       \ 'ctrl-v': 'vsplit' }
+
+" http://learnvimscriptthehardway.stevelosh.com/chapters/33.html
+" <leader>giw, etc.
+nnoremap <silent><leader>g :<c-u>set operatorfunc=GrepOperator<cr>g@
+vnoremap <silent><leader>g :<c-u>call GrepOperator(visualmode())<cr>
+
+function! GrepOperator(type)
+    if a:type ==# 'v'
+        normal! `<v`>y
+    elseif a:type ==# 'char'
+        normal! `[v`]y
+    else
+        return
+    endif
+
+    echo 'Searching ' . @@
+
+    silent execute "Ag " . @@
+endfunction
 
 " let g:fzf_colors = { 
 "       \ 'fg':      ['fg', 'Directory'],
@@ -289,7 +320,7 @@ let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
 
 " ---> ctrlp.vim
 
-let g:ctrlp_match_window = 'top,order:ttb,min:1,max:30,results:30'
+let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:30,results:30'
 let g:ctrlp_show_hidden = 1
 "change working path === pwd
 let g:ctrlp_working_path_mode = 2
@@ -300,10 +331,10 @@ let g:ctrlp_custom_ignore = {
 
 " ---> NERDTree
 
-let NERDTreeShowHidden=1
-nnoremap <silent><leader>ee :NERDTreeToggle<cr>
+" let NERDTreeShowHidden=1
+" nnoremap <silent><leader>ee :NERDTreeToggle<cr>
 " reveal current buffer in NERDTree
-nnoremap <silent><leader>er :NERDTreeFind<cr>
+" nnoremap <silent><leader>er :NERDTreeFind<cr>
 
 
 " ---> lightline
@@ -366,8 +397,8 @@ let g:sneak#label = 1
 
 " autocmd BufEnter * GitGutterAll
 autocmd BufWritePost,WinEnter * GitGutter
-nnoremap <leader>hj :GitGutterNextHunk<cr>
-nnoremap <leader>hk :GitGutterPrevHunk<cr>
+nnoremap <leader>nh :GitGutterNextHunk<cr>
+nnoremap <leader>ph :GitGutterPrevHunk<cr>
 
 " ---> goyo
 
@@ -398,6 +429,15 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " => Mappings
 
+noremap <C-S>    :update<CR>
+vnoremap <C-S>   <C-C>:update<CR>
+inoremap <C-S>   <C-C>:update<CR>
+" inoremap <C-S>   <C-O>:update<CR>
+
+nnoremap <Leader>b :ls<CR>:b
+nnoremap <leader>gn <C-^>
+" nnoremap <leader>b :set nomore <Bar> :ls <Bar> :set more <CR>:b<Space>
+
 nnoremap <leader>w :w<cr>
 
 " edit vimrc file
@@ -406,18 +446,15 @@ nnoremap <leader>ev :e $MYVIMRC<cr>
 " source vimrc file
 nnoremap <leader>sv :so $MYVIMRC<cr>
 
-" save
-nnoremap <C-S> :w<cr>
-
-nnoremap <leader>q :bd<cr>
+nnoremap <leader>gq :bd<cr>
 
 " no highlight
-nnoremap <silent><leader>nh :nohl<cr>
+nnoremap <silent><leader>nn :nohl<cr>
 
 " inoremap jk <Esc>
 
-nnoremap = <C-w>>
-nnoremap - <C-w><
+" nnoremap = <C-w>>
+" nnoremap - <C-w><
 
 vnoremap // y/<C-r>"<cr>
 
@@ -454,10 +491,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" tnoremap <C-h> <C-\><C-n><C-w>h
-" tnoremap <C-j> <C-\><C-n><C-w>j
-" tnoremap <C-k> <C-\><C-n><C-w>k
-" tnoremap <C-l> <C-\><C-n><C-w>l
 nnoremap <M-h> <c-w>h
 nnoremap <M-j> <c-w>j
 nnoremap <M-k> <c-w>k
@@ -470,25 +503,6 @@ if has('nvim')
   tnoremap <M-l> <c-\><c-n><c-w>l
 endif
 
-
-" http://learnvimscriptthehardway.stevelosh.com/chapters/33.html
-" <leader>giw, etc.
-nnoremap <silent><leader>g :<c-u>set operatorfunc=GrepOperator<cr>g@
-vnoremap <silent><leader>g :<c-u>call GrepOperator(visualmode())<cr>
-
-function! GrepOperator(type)
-    if a:type ==# 'v'
-        normal! `<v`>y
-    elseif a:type ==# 'char'
-        normal! `[v`]y
-    else
-        return
-    endif
-
-    echo 'Searching ' . @@
-
-    silent execute "Ag " . @@
-endfunction
 
 " http://learnvimscriptthehardway.stevelosh.com/chapters/38.html
 nnoremap <leader>q :call QuickfixToggle()<cr>
@@ -506,6 +520,7 @@ function! QuickfixToggle()
         let g:quickfix_is_open = 1
     endif
 endfunction
+
 
 " => Autocmds
 
