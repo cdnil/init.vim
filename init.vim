@@ -4,15 +4,19 @@ call plug#begin('~/.vim/plugged')
 
 " general
 Plug 'yianwillis/vimcdoc' " chinese help
+Plug 'rbgrouleff/bclose.vim' "<leader>bd close buffer without closing the window
 
 " finder
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'pbogut/fzf-mru.vim'
 
 " ui
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim' "Distraction-free writing
+Plug 'nathanaelkane/vim-indent-guides'
+
 
 " git
 Plug 'airblade/vim-gitgutter'
@@ -26,6 +30,8 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
+Plug 'AndrewRadev/splitjoin.vim' " multiline <-> single-line
+Plug 'junegunn/vim-slash' " 1) auto clear search highlight; 2) improved star-search
 
 " lang
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
@@ -38,11 +44,21 @@ Plug 'moll/vim-node'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'HerringtonDarkholme/yats.vim'
+
+Plug 'machakann/vim-highlightedyank'
+
+" others
+Plug 'itchyny/calendar.vim'
+
+let g:calendar_google_calendar = 1
+
 call plug#end()
 
 
 " => Plugin Trash
 
+" Plug 'itchyny/dictionary.vim' " not compatible with neovim
+" Plug 'tommcdo/vim-lion' " A simple alignment operator for Vim text editor
 " Plug 'mileszs/ack.vim'
 " Plug 'ctrlpvim/ctrlp.vim'
 " Plug 'romainl/vim-qf'
@@ -94,64 +110,40 @@ call plug#end()
 
 " => options
 
-set path+=**                                                                    
-set wildignore+=**/node_modules/** 
-
-packadd cfilter
-
-" hide intro message
-set shortmess+=I
-
-set noerrorbells
-set novisualbell
-
-" true color
-set termguicolors
-
-" hide -- [MODE] -- on the last line, using lightline.vim
-set noshowmode
-
-set nowrap
-set linebreak
-
-" for updating gutter
-" https://github.com/airblade/vim-gitgutter#getting-started
-set updatetime=100
-
-" synchronize with system clipboard
-set clipboard=unnamed
-
-" show the line numbers
-set number
-
-set cursorline
+let mapleader=" "
 
 colorscheme onehalfdark
+packadd cfilter
+
+set path+=**                                                                    
+set wildignore+=**/node_modules/** 
+set shortmess+=I " hide intro message
+set noerrorbells
+set novisualbell
+set termguicolors
+set noshowmode
+set nowrap
+set linebreak
+set updatetime=100
+set clipboard=unnamed
+set number
+set cursorline
 set signcolumn=yes
-
-hi Visual guibg=#407E61
-
-set fillchars+=vert:\│
-
+set fillchars=vert:\│,fold:-
 set splitright
 set splitbelow
-
-" vertical split bar style
-hi VertSplit guibg=bg
-
 set expandtab
-
-" insert 2 spaces for a tab
 set tabstop=2
-
 set softtabstop=2
-
 set shiftwidth=2
-
 set ignorecase
 
-" map leader to space
-let mapleader=" "
+hi Visual guibg=#407E61
+hi VertSplit guibg=bg
+
+" => plugin Config
+
+" ---> netrw
 
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
@@ -159,18 +151,11 @@ let g:netrw_browse_split = 4
 let g:netrw_winsize = 20
 let g:netrw_altv = 1
 
-" augroup ProjectDrawer
-"   autocmd!
-"   autocmd VimEnter * :Vexplore
-" augroup END
 
-if executable('ag')
-  " set grepprg=ag\ --nogroup\ --nocolor
-  set grepprg=ag\ --vimgrep\ $*
-  " set grepformat=%f:%l:%c:%m
-endif
+" ---> highlightedyank
 
-" => plugin Config
+let g:highlightedyank_highlight_duration = 100
+
 
 " ---> vim-qf
 
@@ -243,8 +228,11 @@ let $FZF_DEFAULT_OPTS = '--bind ctrl-a:toggle-all --layout=reverse --height=10% 
 let g:fzf_nvim_statusline = 0
 let g:fzf_statusline = 0
 let g:fzf_layout = {'down': '20%'}
-nnoremap <silent><leader>f :FZF<cr>
+nnoremap <silent><C-p> :FZF<cr>
 nnoremap <silent><leader>gg :Ag<cr>
+nnoremap <silent><leader>m :FZFMru<cr>
+nnoremap <silent><leader>g :<c-u>set operatorfunc=GrepOperator<cr>g@
+vnoremap <silent><leader>g :<c-u>call GrepOperator(visualmode())<cr>
 
 function! s:build_quickfix_list(lines)
   call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
@@ -259,13 +247,6 @@ let g:fzf_action = {
 
 " http://learnvimscriptthehardway.stevelosh.com/chapters/33.html
 " <leader>giw, etc.
-
-nnoremap <C-p> :FZF<cr>
-nnoremap <leader>gg :Ag<cr>
-
-nnoremap <silent><leader>g :<c-u>set operatorfunc=GrepOperator<cr>g@
-vnoremap <silent><leader>g :<c-u>call GrepOperator(visualmode())<cr>
-
 function! GrepOperator(type)
     if a:type ==# 'v'
         normal! `<v`>y
@@ -458,6 +439,8 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " => Mappings
 
+nnoremap <leader><Tab> :b#<cr>
+
 noremap <C-S>    :update<CR>
 vnoremap <C-S>   <C-C>:update<CR>
 inoremap <C-S>   <C-C>:update<CR>
@@ -550,6 +533,21 @@ function! QuickfixToggle()
     endif
 endfunction
 
+nnoremap <silent><leader>s :<c-u>set operatorfunc=SearchOperator<cr>g@
+vnoremap <silent><leader>s :<c-u>call SearchOperator(visualmode())<cr>
+
+function! SearchOperator(type)
+    if a:type ==# 'v'
+        normal! `<v`>y
+    elseif a:type ==# 'char'
+        normal! `[v`]y
+    else
+        return
+    endif
+
+    silent execute '!open https://www.google.com/search\?q=\'. @@
+endfunction
+
 
 " => Autocmds
 
@@ -629,11 +627,6 @@ augroup END
 " => Abbreviations
 
 
-" => Customize Commands
-
-command! -nargs=1 Go silent execute '!open https://www.google.com/search\?q=\' . <q-args>
-
-
 " => Welcome Screen
 
 " let g:welcome_text = 'Shape ideas into code'
@@ -699,3 +692,6 @@ command! -nargs=1 Go silent execute '!open https://www.google.com/search\?q=\' .
 "   execute "normal! G"
  
 " endfun
+
+" => Commands
+
