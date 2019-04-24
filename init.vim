@@ -3,10 +3,10 @@
 call plug#begin('~/.vim/plugged')
 
 " general
-Plug 'prettier/vim-prettier', { 'do': 'yarn' }
 Plug 'yianwillis/vimcdoc' " chinese help
 
 " finder
+Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
@@ -27,32 +27,36 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 
-" frontend 
+" lang
+Plug 'prettier/vim-prettier', { 'do': 'yarn' }
 Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
+
+" frontend 
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'ap/vim-css-color'
 Plug 'moll/vim-node'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-
+Plug 'HerringtonDarkholme/yats.vim'
 call plug#end()
 
 
 " => Plugin Trash
 
 " Plug 'mileszs/ack.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'romainl/vim-qf'
+" Plug 'Shougo/denite.nvim'
+" Plug 'leafgarland/typescript-vim'
+" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 " Plug 'neoclide/vim-jsx-improve'
 " Plug 'tpope/vim-vinegar' " Combine with netrw to create a delicious salad dressing
-" Plug 'ctrlpvim/ctrlp.vim'
 " Plug 'tpope/vim-dadbod'
 " Plug 'wincent/ferret' " Enhanced multi-file search for Vim 
 " Plug 'wincent/command-t'
 " Plug 'tpope/vim-obsession' " continuously updated session files
 " Plug 'henrik/vim-indexed-search'
-" Plug 'Shougo/denite.nvim'
-" Plug 'romainl/vim-qf'
 " Plug 'ap/vim-buftabline'
-" Plug 'scrooloose/nerdtree'
 " Plug 'justinmk/vim-sneak' " motion
 " Plug 'w0rp/ale'
 " Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
@@ -170,18 +174,15 @@ endif
 
 " ---> vim-qf
 
-let g:qf_mapping_ack_style = 1
-let g:qf_auto_open_quickfix = 0
-let g:qf_auto_open_loclist = 0
+" let g:qf_mapping_ack_style = 1
+" let g:qf_auto_open_quickfix = 0
+" let g:qf_auto_open_loclist = 0
 
 " ---> ack
 
 " let g:ackprg = "ag --vimgrep"
 " let g:ackhighlight = 1
 " let g:ack_use_cword_for_empty_search = 0
-
-" nnoremap <leader>f :AckFile!<space>
-" nnoremap <leader>gg :Ack!<space>
 
 " ---> vimcdoc
 
@@ -190,14 +191,36 @@ autocmd! VimEnter * set helplang=en
 
 " ---> Denite
 
-" call denite#custom#var('file/rec', 'command',
-"       \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-
 " call denite#custom#alias('source', 'file/rec/git', 'file/rec')
 " call denite#custom#var('file/rec/git', 'command',
 "       \ ['git', 'ls-files', '-co', '--exclude-standard'])
 " nnoremap <silent> <C-p> :<C-u>Denite
 "       \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`<CR>
+" call denite#custom#map(
+"       \ 'insert',
+"       \ '<C-n>',
+"       \ '<denite:move_to_next_line>',
+"       \ 'noremap'
+"       \)
+" call denite#custom#map(
+"       \ 'insert',
+"       \ '<C-p>',
+"       \ '<denite:move_to_previous_line>',
+"       \ 'noremap'
+"       \)
+
+" call denite#custom#var('file/rec', 'command',
+"       \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+" call denite#custom#var('grep', 'command', ['ag'])
+" call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
+" call denite#custom#var('grep', 'recursive_opts', [])
+" call denite#custom#var('grep', 'pattern_opt', [])
+" call denite#custom#var('grep', 'separator', ['--'])
+" call denite#custom#var('grep', 'final_opts', [])
+
+" " narrow by path in grep source
+" call denite#custom#source('grep',
+"       \ 'converters', ['converter/relative_word'])
 
 " ---> coc.nvim
 let g:coc_start_at_startup = 1
@@ -236,6 +259,10 @@ let g:fzf_action = {
 
 " http://learnvimscriptthehardway.stevelosh.com/chapters/33.html
 " <leader>giw, etc.
+
+nnoremap <C-p> :FZF<cr>
+nnoremap <leader>gg :Ag<cr>
+
 nnoremap <silent><leader>g :<c-u>set operatorfunc=GrepOperator<cr>g@
 vnoremap <silent><leader>g :<c-u>call GrepOperator(visualmode())<cr>
 
@@ -257,17 +284,19 @@ endfunction
 "       \ 'fg':      ['fg', 'Directory'],
 "       \ 'bg':      ['bg', 'Normal'],
 "       \ 'hl':      ['fg', 'PreProc'],
-"       \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-"       \ 'bg+':     ['bg', 'Normal', 'CursorColumn'],
-"       \ 'gutter':  ['bg', 'Normal'],
 "       \ 'hl+':     ['fg', 'PreProc'],
-"       \ 'info':    ['fg', 'PreProc'],
-"       \ 'border':  ['fg', 'Ignore'],
 "       \ 'prompt':  ['fg', 'Directory'],
-"       \ 'pointer': ['fg', 'Ignore'],
-"       \ 'marker':  ['fg', 'Keyword'],
-"       \ 'spinner': ['fg', 'Label'],
-"       \ 'header':  ['fg', 'Comment'] }
+"       \}
+
+      " \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      " \ 'bg+':     ['bg', 'Normal', 'CursorColumn'],
+      " \ 'gutter':  ['bg', 'Normal'],
+      " \ 'info':    ['fg', 'PreProc'],
+      " \ 'border':  ['fg', 'Ignore'],
+      " \ 'pointer': ['fg', 'Ignore'],
+      " \ 'marker':  ['fg', 'Keyword'],
+      " \ 'spinner': ['fg', 'Label'],
+      " \ 'header':  ['fg', 'Comment'] }
 
 
 " ---> pangu
@@ -320,7 +349,7 @@ let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
 
 " ---> ctrlp.vim
 
-let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:30,results:30'
+let g:ctrlp_match_window = 'bottom,order:ttb,min:10,max:10,results:100'
 let g:ctrlp_show_hidden = 1
 "change working path === pwd
 let g:ctrlp_working_path_mode = 2
@@ -331,10 +360,10 @@ let g:ctrlp_custom_ignore = {
 
 " ---> NERDTree
 
-" let NERDTreeShowHidden=1
-" nnoremap <silent><leader>ee :NERDTreeToggle<cr>
+let NERDTreeShowHidden=1
+nnoremap <silent><leader>ee :NERDTreeToggle<cr>
 " reveal current buffer in NERDTree
-" nnoremap <silent><leader>er :NERDTreeFind<cr>
+nnoremap <silent><leader>er :NERDTreeFind<cr>
 
 
 " ---> lightline
