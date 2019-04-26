@@ -32,20 +32,21 @@ Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'AndrewRadev/splitjoin.vim' " multiline <-> single-line
 Plug 'junegunn/vim-slash' " 1) auto clear search highlight; 2) improved star-search
+Plug 'machakann/vim-highlightedyank'
 
 " lang
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
 Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
+Plug 'mattn/emmet-vim', { 'for': ['javascript.jsx', 'html', 'css'] }
+Plug 'godlygeek/tabular' " text filtering and alignment
 
 " frontend 
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'ap/vim-css-color'
 Plug 'moll/vim-node'
-Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'HerringtonDarkholme/yats.vim'
+Plug 'HerringtonDarkholme/yats.vim' " typescript syntax
 
-Plug 'machakann/vim-highlightedyank'
 
 " others
 Plug 'itchyny/calendar.vim'
@@ -57,8 +58,10 @@ call plug#end()
 
 " => Plugin Trash
 
-" Plug 'itchyny/dictionary.vim' " not compatible with neovim
+" Plug 'pangloss/vim-javascript'
+" Plug 'jelera/vim-javascript-syntax'
 " Plug 'tommcdo/vim-lion' " A simple alignment operator for Vim text editor
+" Plug 'itchyny/dictionary.vim' " not compatible with neovim
 " Plug 'mileszs/ack.vim'
 " Plug 'ctrlpvim/ctrlp.vim'
 " Plug 'romainl/vim-qf'
@@ -83,7 +86,6 @@ call plug#end()
 " Plug 'Shougo/neomru.vim'
 " Plug 'sonph/onehalf', { 'rtp': 'vim/' }
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'mattn/emmet-vim'
 " Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
 " Plug 'ternjs/tern_for_vim', { 'do': 'yarn install', 'for': ['javascript', 'javascript.jsx'] }
 " Plug 'Quramy/tsuquyomi' " typescript plugin
@@ -102,7 +104,6 @@ call plug#end()
 " Plug 'posva/vim-vue'
 " Plug 'jparise/vim-graphql'
 " Plug 'trevordmiller/nova-vim'
-" Plug 'godlygeek/tabular' " text filtering and alignment
 " Plug 'hotoo/pangu.vim' "中文排版自动规范化
 " Plug 'reedes/vim-lexical' " Build on Vim’s spell/thes/dict completion
 " Plug 'flazz/vim-colorschemes'
@@ -137,6 +138,10 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set ignorecase
+set foldmethod=syntax "syntax highlighting items specify folds
+set foldlevelstart=99 "start file with all folds opened
+
+let javaScript_fold=1 "activate folding by JS syntax
 
 hi Visual guibg=#407E61
 hi VertSplit guibg=bg
@@ -216,7 +221,6 @@ let g:coc_global_extensions = [
 \ 'coc-html',
 \ 'coc-yaml',
 \ 'coc-python',
-\ 'coc-emmet',
 \ 'coc-snippets',
 \ ]
 
@@ -231,6 +235,7 @@ let g:fzf_layout = {'down': '20%'}
 nnoremap <silent><C-p> :FZF<cr>
 nnoremap <silent><leader>gg :Ag<cr>
 nnoremap <silent><leader>m :FZFMru<cr>
+nnoremap <silent><leader>bf :Buffer<cr>
 nnoremap <silent><leader>g :<c-u>set operatorfunc=GrepOperator<cr>g@
 vnoremap <silent><leader>g :<c-u>call GrepOperator(visualmode())<cr>
 
@@ -392,10 +397,19 @@ endfunction
 
 " ---> emmet
 
-let g:user_emmet_leader_key='<c-,>'
-" let g:user_emmet_mode='i'
-" inoremap jm <C-y>,
-" only enable normal mode functions
+let g:user_emmet_leader_key='<c-e>'
+let g:user_emmet_mode='i'
+let g:user_emmet_install_global = 0
+let g:user_emmet_settings={
+\  'javascript.jsx' : {
+\    'extends': 'jsx',
+\    'ignore_embeded_filetype': 1,
+\    'attribute_name': {'class': 'className', 'for': 'htmlFor'},
+\    'empty_element_suffix': ' />',
+\  },
+\}
+autocmd FileType html,css,javascript.jsx EmmetInstall
+
 
 " ---> prettier
 
@@ -446,7 +460,6 @@ vnoremap <C-S>   <C-C>:update<CR>
 inoremap <C-S>   <C-C>:update<CR>
 " inoremap <C-S>   <C-O>:update<CR>
 
-nnoremap <Leader>b :ls<CR>:b
 nnoremap <leader>gn <C-^>
 " nnoremap <leader>b :set nomore <Bar> :ls <Bar> :set more <CR>:b<Space>
 
