@@ -3,10 +3,10 @@
 call plug#begin('~/.vim/plugged')
 
 " general
-Plug 'yianwillis/vimcdoc' " chinese help
 Plug 'rbgrouleff/bclose.vim' "<leader>bd close buffer without closing the window
 
 " finder
+Plug 'Shougo/denite.nvim'
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
@@ -45,19 +45,24 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'ap/vim-css-color'
 Plug 'moll/vim-node'
 Plug 'mxw/vim-jsx'
+Plug 'jparise/vim-graphql'
 Plug 'HerringtonDarkholme/yats.vim' " typescript syntax
 
+Plug 'idanarye/vim-vebugger'
+
+" color schemes
 
 " others
+Plug 'vimwiki/vimwiki'
 Plug 'itchyny/calendar.vim'
-
-let g:calendar_google_calendar = 1
+Plug 'joshdick/onedark.vim'
 
 call plug#end()
 
-
 " => Plugin Trash
 
+" Plug 'morhetz/gruvbox'
+" Plug 'yianwillis/vimcdoc' " chinese help
 " Plug 'pangloss/vim-javascript'
 " Plug 'jelera/vim-javascript-syntax'
 " Plug 'tommcdo/vim-lion' " A simple alignment operator for Vim text editor
@@ -65,7 +70,6 @@ call plug#end()
 " Plug 'mileszs/ack.vim'
 " Plug 'ctrlpvim/ctrlp.vim'
 " Plug 'romainl/vim-qf'
-" Plug 'Shougo/denite.nvim'
 " Plug 'leafgarland/typescript-vim'
 " Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 " Plug 'neoclide/vim-jsx-improve'
@@ -113,10 +117,9 @@ call plug#end()
 
 let mapleader=" "
 
-colorscheme onehalfdark
 packadd cfilter
 
-set path+=**                                                                    
+set path+=**
 set wildignore+=**/node_modules/** 
 set shortmess+=I " hide intro message
 set noerrorbells
@@ -140,13 +143,38 @@ set shiftwidth=2
 set ignorecase
 set foldmethod=syntax "syntax highlighting items specify folds
 set foldlevelstart=99 "start file with all folds opened
+set autoread
+set list " work great with onedark.vim for showing trail chars
 
-let javaScript_fold=1 "activate folding by JS syntax
+hi ColorColumn guibg=magenta
+call matchadd('ColorColumn', '\%81v', 100)
 
-hi Visual guibg=#407E61
+" let javaScript_fold=1 "activate folding by JS syntax
+
+" hi Visual guibg=#407E61
 hi VertSplit guibg=bg
 
 " => plugin Config
+
+" ---> gruvbox
+
+let g:gruvbox_contrast_dark = 'hard'
+let g:vimwiki_use_calendar = 1
+
+
+" ---> vimwiki
+
+" let wiki_personal = {}
+" let wiki_personal.path = '~/vimwiki/personal/'
+" let wiki_personal.auto_tags = 1
+
+" let wiki_fdd = {}
+" let wiki_fdd.path = '~/vimwiki/fdd'
+" let wiki_fdd.path_html = '~/vimwiki/fdd/html'
+
+" let g:vimwiki_list = [wiki_personal, wiki_fdd]
+" let g:vimwiki_folding = 'list'
+" let g:vimwiki_user_htmls = '404.html,search.html'
 
 " ---> netrw
 
@@ -186,27 +214,28 @@ autocmd! VimEnter * set helplang=en
 "       \ ['git', 'ls-files', '-co', '--exclude-standard'])
 " nnoremap <silent> <C-p> :<C-u>Denite
 "       \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`<CR>
-" call denite#custom#map(
-"       \ 'insert',
-"       \ '<C-n>',
-"       \ '<denite:move_to_next_line>',
-"       \ 'noremap'
-"       \)
-" call denite#custom#map(
-"       \ 'insert',
-"       \ '<C-p>',
-"       \ '<denite:move_to_previous_line>',
-"       \ 'noremap'
-"       \)
+call denite#custom#map(
+      \ 'insert',
+      \ '<C-n>',
+      \ '<denite:move_to_next_line>',
+      \ 'noremap'
+      \)
+call denite#custom#map(
+      \ 'insert',
+      \ '<C-p>',
+      \ '<denite:move_to_previous_line>',
+      \ 'noremap'
+      \)
 
-" call denite#custom#var('file/rec', 'command',
-"       \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-" call denite#custom#var('grep', 'command', ['ag'])
-" call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
-" call denite#custom#var('grep', 'recursive_opts', [])
-" call denite#custom#var('grep', 'pattern_opt', [])
-" call denite#custom#var('grep', 'separator', ['--'])
-" call denite#custom#var('grep', 'final_opts', [])
+call denite#custom#var('file/rec', 'command',
+      \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
+call denite#custom#var('grep', 'command', ['ag'])
+call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', [])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
 
 " " narrow by path in grep source
 " call denite#custom#source('grep',
@@ -232,12 +261,6 @@ let $FZF_DEFAULT_OPTS = '--bind ctrl-a:toggle-all --layout=reverse --height=10% 
 let g:fzf_nvim_statusline = 0
 let g:fzf_statusline = 0
 let g:fzf_layout = {'down': '20%'}
-nnoremap <silent><C-p> :FZF<cr>
-nnoremap <silent><leader>gg :Ag<cr>
-nnoremap <silent><leader>m :FZFMru<cr>
-nnoremap <silent><leader>bf :Buffer<cr>
-nnoremap <silent><leader>g :<c-u>set operatorfunc=GrepOperator<cr>g@
-vnoremap <silent><leader>g :<c-u>call GrepOperator(visualmode())<cr>
 
 function! s:build_quickfix_list(lines)
   call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
@@ -261,9 +284,7 @@ function! GrepOperator(type)
         return
     endif
 
-    echo 'Searching ' . @@
-
-    silent execute "Ag " . @@
+    execute "Denite grep -input=" . @@
 endfunction
 
 " let g:fzf_colors = { 
@@ -347,14 +368,10 @@ let g:ctrlp_custom_ignore = {
 " ---> NERDTree
 
 let NERDTreeShowHidden=1
-nnoremap <silent><leader>ee :NERDTreeToggle<cr>
-" reveal current buffer in NERDTree
-nnoremap <silent><leader>er :NERDTreeFind<cr>
-
 
 " ---> lightline
 
-let g:lightline = { 'colorscheme': 'onehalfdark' }
+let g:lightline = { 'colorscheme': 'onedark' }
 
 let g:lightline.component = {
     \ 'totalLine': "%{line('$')}",
@@ -413,22 +430,20 @@ autocmd FileType html,css,javascript.jsx EmmetInstall
 
 " ---> prettier
 
-let g:prettier#config#parser = 'babel'
+" let g:prettier#config#parser = 'babel'
+let g:prettier#config#single_quote = 'true' 
+let g:prettier#config#trailing_comma = 'all'
 
 let g:sneak#label = 1
 
 " ---> gitgutter
 
 " autocmd BufEnter * GitGutterAll
-autocmd BufWritePost,WinEnter * GitGutter
-nnoremap <leader>nh :GitGutterNextHunk<cr>
-nnoremap <leader>ph :GitGutterPrevHunk<cr>
 
 " ---> goyo
 
 let g:goyo_height = '100%'
 let g:goyo_linenr = 1
-nnoremap <leader>z :Goyo<cr>
 
 function! s:goyo_enter()
   " silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
@@ -453,102 +468,64 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " => Mappings
 
+nnoremap : ;
+nnoremap ; :
+
+vnoremap : ;
+vnoremap ; :
+
 nnoremap <leader><Tab> :b#<cr>
-
-noremap <C-S>    :update<CR>
-vnoremap <C-S>   <C-C>:update<CR>
-inoremap <C-S>   <C-C>:update<CR>
-" inoremap <C-S>   <C-O>:update<CR>
-
-nnoremap <leader>gn <C-^>
-" nnoremap <leader>b :set nomore <Bar> :ls <Bar> :set more <CR>:b<Space>
-
-nnoremap <leader>w :w<cr>
-
-" edit vimrc file
+nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>ev :e $MYVIMRC<cr>
-
-" source vimrc file
 nnoremap <leader>sv :so $MYVIMRC<cr>
+nnoremap <leader>nn :nohl<cr>
 
-nnoremap <leader>gq :bd<cr>
-
-" no highlight
-nnoremap <silent><leader>nn :nohl<cr>
-
-" inoremap jk <Esc>
-
-" nnoremap = <C-w>>
-" nnoremap - <C-w><
-
-vnoremap // y/<C-r>"<cr>
-
-autocmd BufNewFile,BufRead *.vue set filetype=html
-autocmd BufNewFile,BufRead *.wxml set filetype=html
-autocmd FocusGained * :checktime
+nnoremap <silent><leader>f :Denite buffer file/rec<cr>
+nnoremap <silent><leader>gg :Denite -no-empty grep<cr>
 
 nnoremap <leader>nb :bnext<cr>
 nnoremap <leader>pb :bprevious<cr>
-
 nnoremap <leader>nc :cnext<cr>
 nnoremap <leader>pc :cprevious<cr>
-
-" nnoremap <leader>ol :lopen<cr>
 nnoremap <leader>nl :lnext<cr>
 nnoremap <leader>pl :lprevious<cr>
+nnoremap <leader>nh :GitGutterNextHunk<cr>
+nnoremap <leader>ph :GitGutterPrevHunk<cr>
 
-"-------------------------------------------------------------------------------
-" = Terminal
-"-------------------------------------------------------------------------------
+nnoremap <silent><C-p> :FZF<cr>
+nnoremap <silent><leader>m :FZFMru<cr>
+nnoremap <silent><leader>bf :Buffer<cr>
+nnoremap <silent><leader>g :<c-u>set operatorfunc=GrepOperator<cr>g@
+vnoremap <silent><leader>g :<c-u>call GrepOperator(visualmode())<cr>
 
-" open a new terminal window
-" nnoremap <leader>t :vsplit \| term<cr>
+nnoremap <leader>ee :NERDTreeToggle<cr>
+nnoremap <leader>er :NERDTreeFind<cr>
 
-" exit terminal insert mode
+nmap <Leader>wp <Plug>VimwikiDiaryPrevDay
+nmap <Leader>wn <Plug>VimwikiDiaryNextDay
+
+nnoremap <leader>z :Goyo<cr>
+
+" save buffer
+noremap <C-S>    :w<CR>
+vnoremap <C-S>   <C-C>:w<CR>
+inoremap <C-S>   <C-C>:w<CR>
+
+" search visual
+vnoremap // y/<C-r>"<cr>
+
+" terminal
 tnoremap <Esc> <C-\><C-n>
 
-"-------------------------------------------------------------------------------
-" = Window Management
-"-------------------------------------------------------------------------------
-
+" switch windows
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-nnoremap <M-h> <c-w>h
-nnoremap <M-j> <c-w>j
-nnoremap <M-k> <c-w>k
-nnoremap <M-l> <c-w>l
-
-if has('nvim')
-  tnoremap <M-h> <c-\><c-n><c-w>h
-  tnoremap <M-j> <c-\><c-n><c-w>j 
-  tnoremap <M-k> <c-\><c-n><c-w>k
-  tnoremap <M-l> <c-\><c-n><c-w>l
-endif
-
-
-" http://learnvimscriptthehardway.stevelosh.com/chapters/38.html
-nnoremap <leader>q :call QuickfixToggle()<cr>
-
-let g:quickfix_is_open = 0
-
-function! QuickfixToggle()
-    if g:quickfix_is_open
-        cclose
-        let g:quickfix_is_open = 0
-        execute g:quickfix_return_to_window . "wincmd w"
-    else
-        let g:quickfix_return_to_window = winnr()
-        copen
-        let g:quickfix_is_open = 1
-    endif
-endfunction
-
-nnoremap <silent><leader>s :<c-u>set operatorfunc=SearchOperator<cr>g@
-vnoremap <silent><leader>s :<c-u>call SearchOperator(visualmode())<cr>
-
+" search google
+nnoremap <leader>s :<c-u>set operatorfunc=SearchOperator<cr>g@
+vnoremap <leader>s :<c-u>call SearchOperator(visualmode())<cr>
 function! SearchOperator(type)
     if a:type ==# 'v'
         normal! `<v`>y
@@ -569,6 +546,12 @@ endfunction
 "   autocmd BufWinLeave * mkview
 "   autocmd BufWinEnter * silent loadview
 " augroup END<Paste>
+
+autocmd BufWritePost,WinEnter * GitGutter
+
+autocmd BufNewFile,BufRead *.vue set filetype=html
+autocmd BufNewFile,BufRead *.wxml set filetype=html
+autocmd FocusGained * :checktime
 
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.md set wrap linebreak
@@ -639,3 +622,27 @@ augroup END
 
 " => Abbreviations
 
+let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+
+" call NERDTreeAddMenuItem({ 
+"   \'text': 'e(x)ecute',
+"   \ 'shortcut': 'x',
+"   \ 'callback': 'NERDTreeOpen' })
+
+" function! NERDTreeOpen()
+"   let node = g:NERDTreeFileNode.GetSelected()
+"   let path = node.path.str()
+"   let args = shellescape(path, 1) . " > /dev/null"
+"   exe "silent !open " . args
+" endfunction
+
+
+" => ColorScheme
+
+  augroup colorextend
+    autocmd!
+    autocmd ColorScheme * call onedark#extend_highlight("CursorLine", { "bg": { "gui": "#414A58" } })
+  augroup END
+
+colorscheme onedark
