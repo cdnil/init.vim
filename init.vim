@@ -7,10 +7,8 @@ Plug 'rbgrouleff/bclose.vim' "<leader>bd close buffer without closing the window
 
 " finder
 Plug 'Shougo/denite.nvim'
-Plug 'scrooloose/nerdtree'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'pbogut/fzf-mru.vim'
+Plug 'tpope/vim-vinegar' " Combine with netrw to create a delicious salad dressing
+Plug 'easymotion/vim-easymotion'
 
 " ui
 Plug 'itchyny/lightline.vim'
@@ -73,7 +71,6 @@ call plug#end()
 " Plug 'leafgarland/typescript-vim'
 " Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 " Plug 'neoclide/vim-jsx-improve'
-" Plug 'tpope/vim-vinegar' " Combine with netrw to create a delicious salad dressing
 " Plug 'tpope/vim-dadbod'
 " Plug 'wincent/ferret' " Enhanced multi-file search for Vim 
 " Plug 'wincent/command-t'
@@ -93,7 +90,6 @@ call plug#end()
 " Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
 " Plug 'ternjs/tern_for_vim', { 'do': 'yarn install', 'for': ['javascript', 'javascript.jsx'] }
 " Plug 'Quramy/tsuquyomi' " typescript plugin
-" Plug 'easymotion/vim-easymotion'
 " Plug 'bling/vim-bufferline'
 " Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " Plug 'Valloric/YouCompleteMe'
@@ -112,6 +108,10 @@ call plug#end()
 " Plug 'reedes/vim-lexical' " Build on Vim’s spell/thes/dict completion
 " Plug 'flazz/vim-colorschemes'
 " Plug 'felixhummel/setcolors.vim'
+" Plug 'scrooloose/nerdtree'
+" Plug 'junegunn/fzf'
+" Plug 'junegunn/fzf.vim'
+" Plug 'pbogut/fzf-mru.vim'
 
 " => options
 
@@ -164,25 +164,27 @@ let g:vimwiki_use_calendar = 1
 
 " ---> vimwiki
 
-" let wiki_personal = {}
-" let wiki_personal.path = '~/vimwiki/personal/'
-" let wiki_personal.auto_tags = 1
-
-" let wiki_fdd = {}
-" let wiki_fdd.path = '~/vimwiki/fdd'
-" let wiki_fdd.path_html = '~/vimwiki/fdd/html'
-
-" let g:vimwiki_list = [wiki_personal, wiki_fdd]
-" let g:vimwiki_folding = 'list'
-" let g:vimwiki_user_htmls = '404.html,search.html'
+let wiki = {}
+let wiki.path = '~/dropbox/vimwiki/'
+let wiki.auto_tags = 1
+let g:vimwiki_list = [wiki]
+let g:vimwiki_folding = 'list'
+let g:vimwiki_user_htmls = '404.html,search.html'
 
 " ---> netrw
 
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
-let g:netrw_browse_split = 4
+let g:netrw_browse_split = 0
 let g:netrw_winsize = 20
 let g:netrw_altv = 1
+let g:netrw_list_hide = '.tags,.DS_Store'
+let g:netrw_bufsettings="noma nomod nu bl nowrap ro nornu"
+augroup ProjectDrawer
+  autocmd!
+  autocmd VimEnter * :Explore
+  autocmd FileType netrw setl bufhidden=delete
+augroup END
 
 
 " ---> highlightedyank
@@ -425,7 +427,11 @@ let g:user_emmet_settings={
 \    'empty_element_suffix': ' />',
 \  },
 \}
-autocmd FileType html,css,javascript.jsx EmmetInstall
+
+augroup emmet
+  autocmd!
+  autocmd FileType html,css,javascript.jsx EmmetInstall
+augroup END
 
 
 " ---> prettier
@@ -480,7 +486,7 @@ nnoremap <leader>ev :e $MYVIMRC<cr>
 nnoremap <leader>sv :so $MYVIMRC<cr>
 nnoremap <leader>nn :nohl<cr>
 
-nnoremap <silent><leader>f :Denite buffer file/rec<cr>
+nnoremap <silent><C-p> :Denite buffer file/rec<cr>
 nnoremap <silent><leader>gg :Denite -no-empty grep<cr>
 
 nnoremap <leader>nb :bnext<cr>
@@ -492,9 +498,6 @@ nnoremap <leader>pl :lprevious<cr>
 nnoremap <leader>nh :GitGutterNextHunk<cr>
 nnoremap <leader>ph :GitGutterPrevHunk<cr>
 
-nnoremap <silent><C-p> :FZF<cr>
-nnoremap <silent><leader>m :FZFMru<cr>
-nnoremap <silent><leader>bf :Buffer<cr>
 nnoremap <silent><leader>g :<c-u>set operatorfunc=GrepOperator<cr>g@
 vnoremap <silent><leader>g :<c-u>call GrepOperator(visualmode())<cr>
 
@@ -518,14 +521,15 @@ vnoremap // y/<C-r>"<cr>
 tnoremap <Esc> <C-\><C-n>
 
 " switch windows
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-l> <C-w>l
 
 " search google
-nnoremap <leader>s :<c-u>set operatorfunc=SearchOperator<cr>g@
-vnoremap <leader>s :<c-u>call SearchOperator(visualmode())<cr>
+" nnoremap <leader>s :<c-u>set operatorfunc=SearchOperator<cr>g@
+" vnoremap <leader>s :<c-u>call SearchOperator(visualmode())<cr>
+
 function! SearchOperator(type)
     if a:type ==# 'v'
         normal! `<v`>y

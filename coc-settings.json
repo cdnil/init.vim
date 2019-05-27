@@ -2,5 +2,6 @@
   "suggest.autoTrigger": "always",
   "tsserver.enableJavascript": true,
   "suggest.enablePreview": false,
-  "javascript.validate.enable": false
+  "javascript.validate.enable": false,
+  "json.enable": false
 }
