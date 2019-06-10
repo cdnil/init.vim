@@ -53,7 +53,7 @@ Plug 'idanarye/vim-vebugger'
 " others
 Plug 'vimwiki/vimwiki'
 Plug 'itchyny/calendar.vim'
-Plug 'joshdick/onedark.vim'
+" Plug 'cdnil/onedark.vim'
 
 call plug#end()
 
@@ -168,7 +168,7 @@ let wiki = {}
 let wiki.path = '~/dropbox/vimwiki/'
 let wiki.auto_tags = 1
 let g:vimwiki_list = [wiki]
-let g:vimwiki_folding = 'list'
+let g:vimwiki_folding = 'expr'
 let g:vimwiki_user_htmls = '404.html,search.html'
 
 " ---> netrw
@@ -179,10 +179,10 @@ let g:netrw_browse_split = 0
 let g:netrw_winsize = 20
 let g:netrw_altv = 1
 let g:netrw_list_hide = '.tags,.DS_Store'
-let g:netrw_bufsettings="noma nomod nu bl nowrap ro nornu"
+" let g:netrw_bufsettings="noma nomod nu nobl nowrap ro nornu"
 augroup ProjectDrawer
   autocmd!
-  autocmd VimEnter * :Explore
+  " autocmd VimEnter * :Explore
   autocmd FileType netrw setl bufhidden=delete
 augroup END
 
