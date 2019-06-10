@@ -6,7 +6,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'qpkorr/vim-bufkill'
 
 " finder
-Plug 'Shougo/denite.nvim'
+Plug 'Shougo/denite.nvim', { 'tag': '2.1' }
 Plug 'tpope/vim-vinegar' " Combine with netrw to create a delicious salad dressing
 Plug 'easymotion/vim-easymotion'
 
