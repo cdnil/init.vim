@@ -3,7 +3,7 @@
 call plug#begin('~/.vim/plugged')
 
 " general
-Plug 'rbgrouleff/bclose.vim' "<leader>bd close buffer without closing the window
+Plug 'qpkorr/vim-bufkill'
 
 " finder
 Plug 'Shougo/denite.nvim'
@@ -14,7 +14,6 @@ Plug 'easymotion/vim-easymotion'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim' "Distraction-free writing
 Plug 'nathanaelkane/vim-indent-guides'
-
 
 " git
 Plug 'airblade/vim-gitgutter'
@@ -48,12 +47,9 @@ Plug 'HerringtonDarkholme/yats.vim' " typescript syntax
 
 Plug 'idanarye/vim-vebugger'
 
-" color schemes
-
 " others
 Plug 'vimwiki/vimwiki'
 Plug 'itchyny/calendar.vim'
-" Plug 'cdnil/onedark.vim'
 
 call plug#end()
 
