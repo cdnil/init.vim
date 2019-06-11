@@ -640,9 +640,9 @@ let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 
 " => ColorScheme
 
-  augroup colorextend
-    autocmd!
-    autocmd ColorScheme * call onedark#extend_highlight("CursorLine", { "bg": { "gui": "#414A58" } })
-  augroup END
+  " augroup colorextend
+  "   autocmd!
+  "   autocmd ColorScheme * call onedark#extend_highlight("CursorLine", { "bg": { "gui": "#414A58" } })
+  " augroup END
 
 colorscheme onedark
