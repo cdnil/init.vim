@@ -7,6 +7,7 @@ Plug 'qpkorr/vim-bufkill'
 
 " finder
 Plug 'Shougo/denite.nvim', { 'tag': '2.1' }
+Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-vinegar' " Combine with netrw to create a delicious salad dressing
 Plug 'easymotion/vim-easymotion'
 
@@ -36,6 +37,7 @@ Plug 'prettier/vim-prettier', { 'do': 'yarn' }
 Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
 Plug 'mattn/emmet-vim', { 'for': ['javascript.jsx', 'html', 'css'] }
 Plug 'godlygeek/tabular' " text filtering and alignment
+Plug 'w0rp/ale'
 
 " frontend 
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
@@ -50,6 +52,7 @@ Plug 'idanarye/vim-vebugger'
 " others
 Plug 'vimwiki/vimwiki'
 Plug 'itchyny/calendar.vim'
+Plug 'hotoo/pangu.vim' "中文排版自动规范化
 
 call plug#end()
 
@@ -74,7 +77,6 @@ call plug#end()
 " Plug 'henrik/vim-indexed-search'
 " Plug 'ap/vim-buftabline'
 " Plug 'justinmk/vim-sneak' " motion
-" Plug 'w0rp/ale'
 " Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
 " Plug 'mhinz/vim-startify' " The fancy start screen for Vim
 " Plug 'neoclide/denite-extra'
@@ -100,16 +102,16 @@ call plug#end()
 " Plug 'posva/vim-vue'
 " Plug 'jparise/vim-graphql'
 " Plug 'trevordmiller/nova-vim'
-" Plug 'hotoo/pangu.vim' "中文排版自动规范化
 " Plug 'reedes/vim-lexical' " Build on Vim’s spell/thes/dict completion
 " Plug 'flazz/vim-colorschemes'
 " Plug 'felixhummel/setcolors.vim'
-" Plug 'scrooloose/nerdtree'
 " Plug 'junegunn/fzf'
 " Plug 'junegunn/fzf.vim'
 " Plug 'pbogut/fzf-mru.vim'
 
 " => options
+
+colorscheme onedark
 
 let mapleader=" "
 
@@ -142,21 +144,9 @@ set foldlevelstart=99 "start file with all folds opened
 set autoread
 set list " work great with onedark.vim for showing trail chars
 
-hi ColorColumn guibg=magenta
-call matchadd('ColorColumn', '\%81v', 100)
-
-" let javaScript_fold=1 "activate folding by JS syntax
-
-" hi Visual guibg=#407E61
 hi VertSplit guibg=bg
 
 " => plugin Config
-
-" ---> gruvbox
-
-let g:gruvbox_contrast_dark = 'hard'
-let g:vimwiki_use_calendar = 1
-
 
 " ---> vimwiki
 
@@ -188,17 +178,6 @@ augroup END
 let g:highlightedyank_highlight_duration = 100
 
 
-" ---> vim-qf
-
-" let g:qf_mapping_ack_style = 1
-" let g:qf_auto_open_quickfix = 0
-" let g:qf_auto_open_loclist = 0
-
-" ---> ack
-
-" let g:ackprg = "ag --vimgrep"
-" let g:ackhighlight = 1
-" let g:ack_use_cword_for_empty_search = 0
 
 " ---> vimcdoc
 
@@ -252,57 +231,6 @@ let g:coc_global_extensions = [
 \ ]
 
 
-" ---> fzf
-
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
-let $FZF_DEFAULT_OPTS = '--bind ctrl-a:toggle-all --layout=reverse --height=10% --no-bold --prompt="  "'
-let g:fzf_nvim_statusline = 0
-let g:fzf_statusline = 0
-let g:fzf_layout = {'down': '20%'}
-
-function! s:build_quickfix_list(lines)
-  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
-  copen
-endfunction
-
-let g:fzf_action = {
-      \ 'ctrl-q': function('s:build_quickfix_list'),
-      \ 'ctrl-t': 'tab split',
-      \ 'ctrl-x': 'split',
-      \ 'ctrl-v': 'vsplit' }
-
-" http://learnvimscriptthehardway.stevelosh.com/chapters/33.html
-" <leader>giw, etc.
-function! GrepOperator(type)
-    if a:type ==# 'v'
-        normal! `<v`>y
-    elseif a:type ==# 'char'
-        normal! `[v`]y
-    else
-        return
-    endif
-
-    execute "Denite grep -input=" . @@
-endfunction
-
-" let g:fzf_colors = { 
-"       \ 'fg':      ['fg', 'Directory'],
-"       \ 'bg':      ['bg', 'Normal'],
-"       \ 'hl':      ['fg', 'PreProc'],
-"       \ 'hl+':     ['fg', 'PreProc'],
-"       \ 'prompt':  ['fg', 'Directory'],
-"       \}
-
-      " \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-      " \ 'bg+':     ['bg', 'Normal', 'CursorColumn'],
-      " \ 'gutter':  ['bg', 'Normal'],
-      " \ 'info':    ['fg', 'PreProc'],
-      " \ 'border':  ['fg', 'Ignore'],
-      " \ 'pointer': ['fg', 'Ignore'],
-      " \ 'marker':  ['fg', 'Keyword'],
-      " \ 'spinner': ['fg', 'Label'],
-      " \ 'header':  ['fg', 'Comment'] }
-
 
 " ---> pangu
 
@@ -347,26 +275,6 @@ let g:ale_sign_error = '●' " Less aggressive than the default '>>'
 let g:ale_sign_warning = '.'
 let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
 
-" ---> deoplete
-
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#file#enable_buffer_path = 1
-
-" ---> ctrlp.vim
-
-let g:ctrlp_match_window = 'bottom,order:ttb,min:10,max:10,results:100'
-let g:ctrlp_show_hidden = 1
-"change working path === pwd
-let g:ctrlp_working_path_mode = 2
-let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\.cache$\|\.git$\|\.hg$\|\.svn$\|bower_components$\|dist$\|node_modules$\|project_files$\|test$\|\.vscode$',
-      \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$\|\.DS_Store$' }
-
-
-" ---> NERDTree
-
-let NERDTreeShowHidden=1
-
 " ---> lightline
 
 let g:lightline = { 'colorscheme': 'onedark' }
@@ -375,10 +283,21 @@ let g:lightline.component = {
     \ 'totalLine': "%{line('$')}",
     \ }
 
+let g:lightline.subseparator = { 'left': '|', 'right': '|' }
 
-" let g:lightline.subseparator = { 'left': '▪︎', 'right': '|' }
-let g:lightline.subseparator = { 'left': '‣', 'right': '|' }
+let g:lightline.component_expand = {
+      \  'linter_checking': 'lightline#ale#checking',
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
+      \ }
 
+let g:lightline.component_type = {
+      \     'linter_checking': 'left',
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \     'linter_ok': 'left',
+      \ }
 
 let g:lightline.component_function = {
     \ 'gitbranch': 'fugitive#head',
@@ -389,7 +308,7 @@ let g:lightline.active = {
     \ 'left': [ [ 'mode' ],
     \           [ 'gitbranch', 'workingDirectory' ],
     \           [ 'filename', 'readonly', 'modified' ] ],
-    \ 'right': [ [ 'totalLine' ],
+    \ 'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
     \            [ 'lineinfo' ],
     \            [ 'filetype' ] ] }
 
@@ -409,6 +328,12 @@ function! WorkingDirectory()
  return strpart(getcwd(), strridx(getcwd(), '/') + 1)
 endfunction
 
+" augroup lightline#ale
+"   autocmd!
+"   autocmd User ALEJobStarted call lightline#update()
+"   autocmd User ALELintPost call lightline#update()
+"   autocmd User ALEFixPost call lightline#update()
+" augroup END
 
 " ---> emmet
 
@@ -638,11 +563,17 @@ let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 " endfunction
 
 
-" => ColorScheme
+" => functions
 
-  " augroup colorextend
-  "   autocmd!
-  "   autocmd ColorScheme * call onedark#extend_highlight("CursorLine", { "bg": { "gui": "#414A58" } })
-  " augroup END
+function! GrepOperator(type)
+    if a:type ==# 'v'
+        normal! `<v`>y
+    elseif a:type ==# 'char'
+        normal! `[v`]y
+    else
+        return
+    endif
 
-colorscheme onedark
+    execute "Denite grep -input=" . @@
+endfunction
+
