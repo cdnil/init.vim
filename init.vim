@@ -28,7 +28,6 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'AndrewRadev/splitjoin.vim' " multiline <-> single-line
-Plug 'junegunn/vim-slash' " 1) auto clear search highlight; 2) improved star-search
 Plug 'machakann/vim-highlightedyank'
 
 " lang
@@ -58,6 +57,7 @@ call plug#end()
 " => Plugin Trash
 
 " Plug 'morhetz/gruvbox'
+" Plug 'junegunn/vim-slash' " 1) auto clear search highlight; 2) improved star-search
 " Plug 'yianwillis/vimcdoc' " chinese help
 " Plug 'pangloss/vim-javascript'
 " Plug 'jelera/vim-javascript-syntax'
