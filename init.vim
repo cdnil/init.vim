@@ -157,20 +157,19 @@ let g:vimwiki_list = [wiki]
 let g:vimwiki_folding = 'expr'
 let g:vimwiki_user_htmls = '404.html,search.html'
 
-" ---> netrw
 
-let g:netrw_liststyle = 3
-let g:netrw_banner = 0
-let g:netrw_browse_split = 0
-let g:netrw_winsize = 20
-let g:netrw_altv = 1
-let g:netrw_list_hide = '.tags,.DS_Store'
-" let g:netrw_bufsettings="noma nomod nu nobl nowrap ro nornu"
-augroup ProjectDrawer
-  autocmd!
-  " autocmd VimEnter * :Explore
-  autocmd FileType netrw setl bufhidden=delete
-augroup END
+" ---> Nerdtree
+
+function! s:openNerdtree() abort
+  if &ft == 'nerdtree'
+    call nerdtree#ui_glue#upDir(0)
+    return
+  endif
+  let path = empty(expand('%')) ? '.' : expand('%:h')
+  execute 'edit '.path
+endfunction
+
+nnoremap <silent> - :call <SID>openNerdtree()<CR>
 
 
 " ---> highlightedyank
@@ -422,9 +421,6 @@ nnoremap <leader>ph :GitGutterPrevHunk<cr>
 nnoremap <silent><leader>g :<c-u>set operatorfunc=GrepOperator<cr>g@
 vnoremap <silent><leader>g :<c-u>call GrepOperator(visualmode())<cr>
 
-nnoremap <leader>ee :NERDTreeToggle<cr>
-nnoremap <leader>er :NERDTreeFind<cr>
-
 nmap <Leader>wp <Plug>VimwikiDiaryPrevDay
 nmap <Leader>wn <Plug>VimwikiDiaryNextDay
 
@@ -550,19 +546,6 @@ augroup END
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 
-" call NERDTreeAddMenuItem({ 
-"   \'text': 'e(x)ecute',
-"   \ 'shortcut': 'x',
-"   \ 'callback': 'NERDTreeOpen' })
-
-" function! NERDTreeOpen()
-"   let node = g:NERDTreeFileNode.GetSelected()
-"   let path = node.path.str()
-"   let args = shellescape(path, 1) . " > /dev/null"
-"   exe "silent !open " . args
-" endfunction
-
-
 " => functions
 
 function! GrepOperator(type)
@@ -577,13 +560,3 @@ function! GrepOperator(type)
     execute "Denite grep -input=" . @@
 endfunction
 
-function! s:openNerdtree() abort
-  if &ft == 'nerdtree'
-    call nerdtree#ui_glue#upDir(0)
-    return
-  endif
-  let path = empty(expand('%')) ? '.' : expand('%:h')
-  execute 'edit '.path
-endfunction
-
-nnoremap <silent> - :call <SID>openNerdtree()<CR>
