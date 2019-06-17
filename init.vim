@@ -171,6 +171,7 @@ endfunction
 
 nnoremap <silent> - :call <SID>openNerdtree()<CR>
 
+let NERDTreeMinimalUI = 1
 
 " ---> highlightedyank
 
