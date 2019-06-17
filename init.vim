@@ -8,7 +8,6 @@ Plug 'qpkorr/vim-bufkill'
 " finder
 Plug 'Shougo/denite.nvim', { 'tag': '2.1' }
 Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-vinegar' " Combine with netrw to create a delicious salad dressing
 Plug 'easymotion/vim-easymotion'
 
 " ui
@@ -108,6 +107,7 @@ call plug#end()
 " Plug 'junegunn/fzf'
 " Plug 'junegunn/fzf.vim'
 " Plug 'pbogut/fzf-mru.vim'
+" Plug 'tpope/vim-vinegar' " Combine with netrw to create a delicious salad dressing
 
 " => options
 
@@ -577,3 +577,13 @@ function! GrepOperator(type)
     execute "Denite grep -input=" . @@
 endfunction
 
+function! s:openNerdtree() abort
+  if &ft == 'nerdtree'
+    call nerdtree#ui_glue#upDir(0)
+    return
+  endif
+  let path = empty(expand('%')) ? '.' : expand('%:h')
+  execute 'edit '.path
+endfunction
+
+nnoremap <silent> - :call <SID>openNerdtree()<CR>
