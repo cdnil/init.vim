@@ -4,6 +4,7 @@ call plug#begin('~/.vim/plugged')
 
 " general
 Plug 'qpkorr/vim-bufkill' " :BD
+Plug 'tpope/vim-eunuch' "Helpers for UNIX
 
 " finder
 Plug 'Shougo/denite.nvim', { 'tag': '2.1' }
@@ -158,6 +159,9 @@ let g:vimwiki_list = [wiki]
 let g:vimwiki_folding = 'expr'
 let g:vimwiki_user_htmls = '404.html,search.html'
 
+" ---> Dirvish
+
+let g:dirvish_mode = ':sort ,^.*[\/],'
 
 " ---> Nerdtree
 
@@ -408,8 +412,8 @@ nnoremap <leader>ev :e $MYVIMRC<cr>
 nnoremap <leader>sv :so $MYVIMRC<cr>
 nnoremap <leader>nn :nohl<cr>
 
-nnoremap <silent><C-p> :Denite buffer file/rec<cr>
-nnoremap <silent><leader>gg :Denite -no-empty grep<cr>
+nnoremap <silent><leader>df :Denite buffer file/rec<cr>
+nnoremap <silent><leader>dg :Denite -no-empty grep<cr>
 
 nnoremap <leader>nb :bnext<cr>
 nnoremap <leader>pb :bprevious<cr>
