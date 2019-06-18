@@ -3,12 +3,13 @@
 call plug#begin('~/.vim/plugged')
 
 " general
-Plug 'qpkorr/vim-bufkill'
+Plug 'qpkorr/vim-bufkill' " :BD
 
 " finder
 Plug 'Shougo/denite.nvim', { 'tag': '2.1' }
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree'
 Plug 'easymotion/vim-easymotion'
+Plug 'justinmk/vim-dirvish'
 
 " ui
 Plug 'itchyny/lightline.vim'
@@ -160,18 +161,18 @@ let g:vimwiki_user_htmls = '404.html,search.html'
 
 " ---> Nerdtree
 
-function! s:openNerdtree() abort
-  if &ft == 'nerdtree'
-    call nerdtree#ui_glue#upDir(0)
-    return
-  endif
-  let path = empty(expand('%')) ? '.' : expand('%:h')
-  execute 'edit '.path
-endfunction
+" function! s:openNERDTree() abort
+"   if &ft == 'nerdtree'
+"     call nerdtree#ui_glue#upDir(0)
+"     return
+"   endif
+"   let path = empty(expand('%')) ? '.' : expand('%:h')
+"   execute 'edit '.path
+" endfunction
 
-nnoremap <silent> - :call <SID>openNerdtree()<CR>
+" nnoremap <silent> - :call <SID>openNERDTree()<CR>
 
-let NERDTreeMinimalUI = 1
+" let NERDTreeMinimalUI = 1
 
 " ---> highlightedyank
 
