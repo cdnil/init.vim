@@ -25,13 +25,13 @@ Plug 'idanarye/vim-merginal' "Fugitive extension to manage and merge Git branche
 Plug 'tpope/vim-rhubarb' " GitHub extension for fugitive.vim
 Plug 'tpope/vim-fugitive' " an awesome Git wrapper
 Plug 'junegunn/gv.vim' " a git commit browser
+Plug 'neoclide/denite-git'
 
 " editing
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'AndrewRadev/splitjoin.vim' " multiline <-> single-line
-Plug 'machakann/vim-highlightedyank'
 
 " lang
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
@@ -50,13 +50,14 @@ Plug 'idanarye/vim-vebugger'
 
 " others
 Plug 'vimwiki/vimwiki'
-Plug 'itchyny/calendar.vim'
+Plug 'itchyoy/calendar.vim'
 Plug 'hotoo/pangu.vim' "中文排版自动规范化
 
 call plug#end()
 
 " => Plugin Trash
 
+" Plug 'machakann/vim-highlightedyank'
 " Plug 'jiangmiao/auto-pairs'
 " Plug 'w0rp/ale'
 " Plug 'ap/vim-css-color'
@@ -254,13 +255,15 @@ let g:coc_global_extensions = [
 \ 'coc-highlight',
 \ 'coc-vimlsp',
 \ 'coc-pairs',
+\ 'coc-yank',
 \ ]
 
-nmap <silent> gd <Plug>(coc-defininion)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <leader>qf  <Plug>(coc-fix-current)
+nnoremap <silent> gd <Plug>(coc-defininion)
+nnoremap <silent> gy <Plug>(coc-type-definition)
+nnoremap <silent> gi <Plug>(coc-implementation)
+nnoremap <silent> gr <Plug>(coc-references)
+nnoremap <leader>qf  <Plug>(coc-fix-current)
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 " ---> pangu
 
 "autocmd BufWritePre *.markdown,*.md,*.text,*.txt,*.wiki,*.cnx call PanGuSpacing()
