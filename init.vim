@@ -3,6 +3,8 @@
 call plug#begin('~/.vim/plugged')
 
 " general
+Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
+Plug 'neoclide/coc-smartf', {'do': 'yarn'}
 Plug 'qpkorr/vim-bufkill' " :BD
 Plug 'tpope/vim-eunuch' "Helpers for UNIX
 
@@ -28,24 +30,21 @@ Plug 'junegunn/gv.vim' " a git commit browser
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'jiangmiao/auto-pairs'
 Plug 'AndrewRadev/splitjoin.vim' " multiline <-> single-line
 Plug 'machakann/vim-highlightedyank'
 
 " lang
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
-Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
 Plug 'mattn/emmet-vim', { 'for': ['javascript.jsx', 'html', 'css'] }
 Plug 'godlygeek/tabular' " text filtering and alignment
-Plug 'w0rp/ale'
 
 " frontend 
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'ap/vim-css-color'
 Plug 'moll/vim-node'
-Plug 'mxw/vim-jsx'
+" Plug 'mxw/vim-jsx'
 Plug 'jparise/vim-graphql'
 Plug 'HerringtonDarkholme/yats.vim' " typescript syntax
+Plug 'neoclide/vim-jsx-improve'
 
 Plug 'idanarye/vim-vebugger'
 
@@ -58,6 +57,9 @@ call plug#end()
 
 " => Plugin Trash
 
+" Plug 'jiangmiao/auto-pairs'
+" Plug 'w0rp/ale'
+" Plug 'ap/vim-css-color'
 " Plug 'morhetz/gruvbox'
 " Plug 'junegunn/vim-slash' " 1) auto clear search highlight; 2) improved star-search
 " Plug 'yianwillis/vimcdoc' " chinese help
@@ -145,10 +147,24 @@ set foldmethod=syntax "syntax highlighting items specify folds
 set foldlevelstart=99 "start file with all folds opened
 set autoread
 set list " work great with onedark.vim for showing trail chars
+set cmdheight=1
 
 hi VertSplit guibg=bg
 
 " => plugin Config
+
+" ---> coc-smartf
+
+" press <esc> to cancel.
+nmap f <Plug>(coc-smartf-forward)
+nmap F <Plug>(coc-smartf-backward)
+nmap ; <Plug>(coc-smartf-repeat)
+nmap , <Plug>(coc-smartf-repeat-opposite)
+
+augroup Smartf
+  autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=#F09538
+  autocmd User SmartfLeave :hi Conceal ctermfg=239 guifg=#504945
+augroup end
 
 " ---> vimwiki
 
@@ -233,10 +249,18 @@ let g:coc_global_extensions = [
 \ 'coc-yaml',
 \ 'coc-python',
 \ 'coc-snippets',
+\ 'coc-eslint',
+\ 'coc-jest',
+\ 'coc-highlight',
+\ 'coc-vimlsp',
+\ 'coc-pairs',
 \ ]
 
-
-
+nmap <silent> gd <Plug>(coc-defininion)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <leader>qf  <Plug>(coc-fix-current)
 " ---> pangu
 
 "autocmd BufWritePre *.markdown,*.md,*.text,*.txt,*.wiki,*.cnx call PanGuSpacing()
@@ -251,34 +275,21 @@ let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/UltiSnips']
 " let g:ale_linters = {
 " \   'javascript': ['eslint'],
 " \}
-let g:ale_fixers = {
-\   'javascript': ['prettier'],
-\   'css': ['prettier'],
-\}
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-let g:ale_open_list = 0
-let g:ale_lint_on_text_changed = 0
-let g:ale_lint_on_save = 1
-let g:ale_keep_list_window_open = 0
+" let g:ale_fixers = {
+" \   'javascript': ['prettier'],
+" \   'css': ['prettier'],
+" \}
+" let g:ale_set_loclist = 0
+" let g:ale_set_quickfix = 1
+" let g:ale_open_list = 0
+" let g:ale_lint_on_text_changed = 0
+" let g:ale_lint_on_save = 1
+" let g:ale_keep_list_window_open = 0
 
 
-function! LinterStatus() abort
-    let l:counts = ale#statusline#Count(bufnr(''))
-
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
-
-    return l:counts.total == 0 ? 'OK' : printf(
-    \   '%dW %dE'k
-    \   all_non_errorsk
-    \   all_errors
-    \)
-endfunction
-
-let g:ale_sign_error = '●' " Less aggressive than the default '>>'
-let g:ale_sign_warning = '.'
-let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
+" let g:ale_sign_error = '●' " Less aggressive than the default '>>'
+" let g:ale_sign_warning = '.'
+" let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
 
 " ---> lightline
 
@@ -291,29 +302,22 @@ let g:lightline.component = {
 let g:lightline.subseparator = { 'left': '|', 'right': '|' }
 
 let g:lightline.component_expand = {
-      \  'linter_checking': 'lightline#ale#checking',
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok',
       \ }
 
 let g:lightline.component_type = {
-      \     'linter_checking': 'left',
-      \     'linter_warnings': 'warning',
-      \     'linter_errors': 'error',
-      \     'linter_ok': 'left',
       \ }
 
 let g:lightline.component_function = {
     \ 'gitbranch': 'fugitive#head',
     \ 'workingDirectory': 'WorkingDirectory',
+    \ 'cocstatus': 'coc#status',
     \ }
 
 let g:lightline.active = {
     \ 'left': [ [ 'mode' ],
     \           [ 'gitbranch', 'workingDirectory' ],
     \           [ 'filename', 'readonly', 'modified' ] ],
-    \ 'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+    \ 'right': [ ['cocstatus'],
     \            [ 'lineinfo' ],
     \            [ 'filetype' ] ] }
 
