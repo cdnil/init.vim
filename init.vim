@@ -50,13 +50,14 @@ Plug 'idanarye/vim-vebugger'
 
 " others
 Plug 'vimwiki/vimwiki'
-Plug 'itchyoy/calendar.vim'
+Plug 'itchyny/calendar.vim'
 Plug 'hotoo/pangu.vim' "中文排版自动规范化
 
 call plug#end()
 
 " => Plugin Trash
 
+" Plug 'masukomi/vim-markdown-folding'
 " Plug 'machakann/vim-highlightedyank'
 " Plug 'jiangmiao/auto-pairs'
 " Plug 'w0rp/ale'
@@ -149,6 +150,7 @@ set foldlevelstart=99 "start file with all folds opened
 set autoread
 set list " work great with onedark.vim for showing trail chars
 set cmdheight=1
+set synmaxcol=128
 
 hi VertSplit guibg=bg
 
@@ -169,9 +171,12 @@ augroup end
 
 " ---> vimwiki
 
-let wiki = {}
-let wiki.path = '~/dropbox/vimwiki/'
-let wiki.auto_tags = 1
+let wiki = {
+      \ 'path': '~/Dropbox/vimwiki',
+      \ 'syntax': 'markdown',
+      \ 'ext': '.md',
+      \ 'auto_tags': 1,
+      \}
 let g:vimwiki_list = [wiki]
 let g:vimwiki_folding = 'expr'
 let g:vimwiki_user_htmls = '404.html,search.html'
@@ -414,13 +419,12 @@ vnoremap : ;
 vnoremap ; :
 
 nnoremap <leader><Tab> :b#<cr>
-nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>ev :e $MYVIMRC<cr>
 nnoremap <leader>sv :so $MYVIMRC<cr>
 nnoremap <leader>nn :nohl<cr>
 
-nnoremap <silent><leader>df :Denite buffer file/rec<cr>
-nnoremap <silent><leader>dg :Denite -no-empty grep<cr>
+nnoremap <silent><leader>f :Denite buffer file/rec<cr>
+nnoremap <silent><leader>gg :Denite -no-empty grep<cr>
 
 nnoremap <leader>nb :bnext<cr>
 nnoremap <leader>pb :bprevious<cr>
@@ -428,8 +432,10 @@ nnoremap <leader>nc :cnext<cr>
 nnoremap <leader>pc :cprevious<cr>
 nnoremap <leader>nl :lnext<cr>
 nnoremap <leader>pl :lprevious<cr>
-nnoremap <leader>nh :GitGutterNextHunk<cr>
-nnoremap <leader>ph :GitGutterPrevHunk<cr>
+
+nnoremap <leader>gj :GitGutterNextHunk<cr>
+nnoremap <leader>gk :GitGutterPrevHunk<cr>
+nnoremap <leader>gu :GitGutterUndoHunk<cr>
 
 nnoremap <silent><leader>g :<c-u>set operatorfunc=GrepOperator<cr>g@
 vnoremap <silent><leader>g :<c-u>call GrepOperator(visualmode())<cr>
@@ -472,6 +478,17 @@ function! SearchOperator(type)
     silent execute '!open https://www.google.com/search\?q=\'. @@
 endfunction
 
+nnoremap <silent><leader>ds :<c-u>call Webster()<cr>
+
+function! Webster()
+  silent execute '!open http://learnersdictionary.com/definition/'.expand('<cword>')
+endfunction
+
+nnoremap <silent><leader>ys :<c-u>call Youglish()<cr>
+
+function! Youglish()
+  silent execute '!open https://youglish.com/search/'.expand('<cword>').'/us'
+endfunction
 
 " => Autocmds
 
