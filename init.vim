@@ -2,61 +2,46 @@
 
 call plug#begin('~/.vim/plugged')
 
-" general
-Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
-Plug 'neoclide/coc-smartf', {'do': 'yarn'}
-Plug 'qpkorr/vim-bufkill' " :BD
-Plug 'tpope/vim-eunuch' "Helpers for UNIX
-
-" finder
+Plug 'AndrewRadev/splitjoin.vim' " multiline <-> single-line
+Plug 'HerringtonDarkholme/yats.vim' " typescript syntax
 Plug 'Shougo/denite.nvim', { 'tag': '2.1' }
-" Plug 'scrooloose/nerdtree'
-Plug 'easymotion/vim-easymotion'
-Plug 'justinmk/vim-dirvish'
-
-" ui
-Plug 'itchyny/lightline.vim'
-Plug 'junegunn/goyo.vim' "Distraction-free writing
-Plug 'nathanaelkane/vim-indent-guides'
-
-" git
+Plug 'Shougo/neomru.vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'easymotion/vim-easymotion'
+Plug 'godlygeek/tabular' " text filtering and alignment
+Plug 'hotoo/pangu.vim' "中文排版自动规范化
 Plug 'idanarye/vim-merginal' "Fugitive extension to manage and merge Git branches
-Plug 'tpope/vim-rhubarb' " GitHub extension for fugitive.vim
-Plug 'tpope/vim-fugitive' " an awesome Git wrapper
+Plug 'idanarye/vim-vebugger'
+Plug 'itchyny/calendar.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'jparise/vim-graphql'
+Plug 'junegunn/goyo.vim' "Distraction-free writing
 Plug 'junegunn/gv.vim' " a git commit browser
+Plug 'justinmk/vim-dirvish'
+Plug 'mattn/emmet-vim', { 'for': ['javascript.jsx', 'html', 'css'] }
+Plug 'moll/vim-node'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
 Plug 'neoclide/denite-git'
-
-" editing
+Plug 'neoclide/vim-jsx-improve'
+Plug 'prettier/vim-prettier', { 'do': 'yarn' }
+Plug 'qpkorr/vim-bufkill' " :BD
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-eunuch' "Helpers for UNIX
+Plug 'tpope/vim-fugitive' " an awesome Git wrapper
+Plug 'tpope/vim-rhubarb' " GitHub extension for fugitive.vim
 Plug 'tpope/vim-surround'
-Plug 'AndrewRadev/splitjoin.vim' " multiline <-> single-line
-
-" lang
-Plug 'prettier/vim-prettier', { 'do': 'yarn' }
-Plug 'mattn/emmet-vim', { 'for': ['javascript.jsx', 'html', 'css'] }
-Plug 'godlygeek/tabular' " text filtering and alignment
-
-" frontend 
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'moll/vim-node'
-" Plug 'mxw/vim-jsx'
-Plug 'jparise/vim-graphql'
-Plug 'HerringtonDarkholme/yats.vim' " typescript syntax
-Plug 'neoclide/vim-jsx-improve'
-
-Plug 'idanarye/vim-vebugger'
-
-" others
 Plug 'vimwiki/vimwiki'
-Plug 'itchyny/calendar.vim'
-Plug 'hotoo/pangu.vim' "中文排版自动规范化
 
 call plug#end()
 
 " => Plugin Trash
 
+" Plug 'neoclide/coc-smartf', {'do': 'yarn'}
+" Plug 'mxw/vim-jsx'
+" Plug 'scrooloose/nerdtree'
 " Plug 'masukomi/vim-markdown-folding'
 " Plug 'machakann/vim-highlightedyank'
 " Plug 'jiangmiao/auto-pairs'
@@ -135,7 +120,7 @@ set linebreak
 set updatetime=100
 set clipboard=unnamed
 set number
-set cursorline
+set nocursorline
 set signcolumn=yes
 set fillchars=vert:\│,fold:-
 set splitright
@@ -145,29 +130,16 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set ignorecase
-set foldmethod=syntax "syntax highlighting items specify folds
+set foldmethod=indent "syntax highlighting items specify folds
 set foldlevelstart=99 "start file with all folds opened
 set autoread
 set list " work great with onedark.vim for showing trail chars
 set cmdheight=1
-set synmaxcol=128
+set synmaxcol=500
 
 hi VertSplit guibg=bg
 
 " => plugin Config
-
-" ---> coc-smartf
-
-" press <esc> to cancel.
-nmap f <Plug>(coc-smartf-forward)
-nmap F <Plug>(coc-smartf-backward)
-nmap ; <Plug>(coc-smartf-repeat)
-nmap , <Plug>(coc-smartf-repeat-opposite)
-
-augroup Smartf
-  autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=#F09538
-  autocmd User SmartfLeave :hi Conceal ctermfg=239 guifg=#504945
-augroup end
 
 " ---> vimwiki
 
@@ -263,6 +235,7 @@ let g:coc_global_extensions = [
 \ 'coc-yank',
 \ ]
 
+nmap <silent> <leader>dd <Plug>(coc-definition)
 nnoremap <silent> gd <Plug>(coc-defininion)
 nnoremap <silent> gy <Plug>(coc-type-definition)
 nnoremap <silent> gi <Plug>(coc-implementation)
@@ -318,7 +291,7 @@ let g:lightline.component_type = {
 let g:lightline.component_function = {
     \ 'gitbranch': 'fugitive#head',
     \ 'workingDirectory': 'WorkingDirectory',
-    \ 'cocstatus': 'coc#status',
+    \ 'cocstatus': 'CocStatus',
     \ }
 
 let g:lightline.active = {
@@ -343,6 +316,19 @@ let g:lightline.tabline = {
 
 function! WorkingDirectory()
  return strpart(getcwd(), strridx(getcwd(), '/') + 1)
+endfunction
+
+function! CocStatus() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info) | return '' | endif
+  let msgs = []
+  if get(info, 'error', 0)
+    call add(msgs, 'E' . info['error'])
+  endif
+  if get(info, 'warning', 0)
+    call add(msgs, 'W' . info['warning'])
+  endif
+  return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
 endfunction
 
 " augroup lightline#ale
@@ -390,20 +376,19 @@ let g:goyo_height = '100%'
 let g:goyo_linenr = 1
 
 function! s:goyo_enter()
-  " silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  set noshowmode
   set noshowcmd
   " set scrolloff=999
-  silent !tmux set status off
+  " silent !tmux set status off
+  " silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
 endfunction
 
 function! s:goyo_leave()
-  silent !tmux set status on
-  " silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  set showmode
   set showcmd
   " set scrolloff=5
-  
-  " redraw fillchars=vert:\
-  hi VertSplit guibg=bg
+  " silent !tmux set status on
+  " silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
 endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()

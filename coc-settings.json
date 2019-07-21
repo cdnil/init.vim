@@ -3,5 +3,8 @@
   "tsserver.enableJavascript": true,
   "suggest.enablePreview": false,
   "javascript.validate.enable": false,
-  "json.enable": false
+  "json.enable": true,
+  "eslint.run": "onSave",
+  "eslint.autoFixOnSave": true,
+  "emmet.showAbbreviationSuggestions": false
 }
