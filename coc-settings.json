@@ -1,6 +1,7 @@
 {
   "suggest.autoTrigger": "always",
   "tsserver.enableJavascript": true,
+  "typescript.preferences.importModuleSpecifier": "relative",
   "suggest.enablePreview": false,
   "javascript.validate.enable": false,
   "json.enable": true,
