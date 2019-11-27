@@ -49,6 +49,8 @@ function! s:defx_my_settings() abort
   " \ defx#do_action('repeat')
   nnoremap <silent><buffer><expr> h
   \ defx#do_action('cd', ['..'])
+  nnoremap <silent><buffer><expr> -
+  \ defx#do_action('cd', ['..'])
   nnoremap <silent><buffer><expr> _
   \ defx#do_action('open_directory', getcwd())
   nnoremap <silent><buffer><expr> q

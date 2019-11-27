@@ -18,7 +18,8 @@ Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
 Plug 'mattn/emmet-vim', { 'for': ['javascript.jsx', 'html', 'css'] }
 Plug 'moll/vim-node'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
+" Plug 'neoclide/coc.nvim', {'do': 'yarn --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'neoclide/denite-git'
 Plug 'neoclide/vim-jsx-improve'
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
@@ -31,8 +32,9 @@ Plug 'tpope/vim-fugitive' " an awesome Git wrapper
 Plug 'tpope/vim-rhubarb' " GitHub extension for fugitive.vim
 Plug 'tpope/vim-surround'
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+" Plug 'plasticboy/vim-markdown'
 Plug 'tkhren/vim-fake'
+Plug 'amadeus/vim-convert-color-to'
 
 call plug#end()
 
@@ -98,4 +100,5 @@ call plug#end()
 " Plug 'junegunn/fzf.vim'
 " Plug 'pbogut/fzf-mru.vim'
 " Plug 'tpope/vim-vinegar' " Combine with netrw to create a delicious salad dressing
+" Plug 'jceb/vim-orgmode'
 

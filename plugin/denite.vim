@@ -12,8 +12,8 @@ function! s:denite_normal_settings() abort
 endfunction
 
 function! s:denite_filter_settings()
-  imap <silent><buffer> <C-c> <Plug>(denite_filter_quit)
-  inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+  " imap <silent><buffer> <C-c> <Plug>(denite_filter_quit)
+  inoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
 endfunction
 
 call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
