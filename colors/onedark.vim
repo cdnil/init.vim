@@ -130,7 +130,7 @@ endfunction
 
 " Color Variables {{{
 
-let s:colors = onedark#GetColors()
+let s:colors = palette#GetColors()
 
 let s:red = s:colors.red
 let s:dark_red = s:colors.dark_red

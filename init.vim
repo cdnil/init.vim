@@ -1,5 +1,7 @@
 let mapleader=" "
 
+colorscheme dracula
+
 set path+=**
 set wildignore+=**/node_modules/** 
 set shortmess+=I " hide intro message
@@ -22,6 +24,7 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set ignorecase
+set smartcase
 set foldmethod=indent "syntax highlighting items specify folds
 set foldlevelstart=99 "start file with all folds opened
 set autoread
@@ -31,13 +34,11 @@ set synmaxcol=500
 
 hi VertSplit guibg=bg
 
-colorscheme onedark
+" nnoremap : ;
+" nnoremap ; :
 
-nnoremap : ;
-nnoremap ; :
-
-vnoremap : ;
-vnoremap ; :
+" vnoremap : ;
+" vnoremap ; :
 
 nnoremap <leader><Tab> :b#<cr>
 nnoremap <leader>ev :e $MYVIMRC<cr>
@@ -50,6 +51,7 @@ nnoremap <leader>nc :cnext<cr>
 nnoremap <leader>pc :cprevious<cr>
 nnoremap <leader>nl :lnext<cr>
 nnoremap <leader>pl :lprevious<cr>
+nnoremap <leader>x :Defx ~/.notes<CR>
 
 " save buffer
 nnoremap <silent> <C-S>    :w<CR>
@@ -73,3 +75,4 @@ let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 
 runtime plugins.vim
+

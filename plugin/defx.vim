@@ -71,13 +71,13 @@ function! s:defx_my_settings() abort
   \ defx#do_action('change_vim_cwd')
 endfunction
 
-augroup defx
-    au!
-    au VimEnter * sil! au! FileExplorer *
-    au BufEnter * if s:isdir(expand('%')) | bd | exe 'Defx' | endif
-augroup END
+" augroup defx
+"     au!
+"     au VimEnter * sil! au! FileExplorer *
+"     au BufEnter * if s:isdir(expand('%')) | bd | exe 'Defx' | endif
+" augroup END
 
-fu! s:isdir(dir) abort
-    return !empty(a:dir) && (isdirectory(a:dir) ||
-       \ (!empty($SYSTEMDRIVE) && isdirectory('/'.tolower($SYSTEMDRIVE[0]).a:dir)))
-endfu
+" fu! s:isdir(dir) abort
+"     return !empty(a:dir) && (isdirectory(a:dir) ||
+"        \ (!empty($SYSTEMDRIVE) && isdirectory('/'.tolower($SYSTEMDRIVE[0]).a:dir)))
+" endfu

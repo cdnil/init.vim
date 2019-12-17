@@ -3,7 +3,7 @@
 " This is a [lightline.vim](https://github.com/itchyny/lightline.vim) colorscheme for use with
 " the [onedark.vim](https://github.com/joshdick/onedark.vim) colorscheme.
 
-let s:colors = onedark#GetColors()
+let s:colors = palette()
 
 if get(g:, 'onedark_termcolors', 256) == 16
   let s:term_red = s:colors.red.cterm16
