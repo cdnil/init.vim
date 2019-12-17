@@ -31,8 +31,7 @@ set autoread
 set list " work great with onedark.vim for showing trail chars
 set cmdheight=1
 set synmaxcol=500
-
-hi VertSplit guibg=bg
+set showtabline=2
 
 " nnoremap : ;
 " nnoremap ; :

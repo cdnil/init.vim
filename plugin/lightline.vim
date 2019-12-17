@@ -19,7 +19,7 @@ let g:lightline.component_function = {
     \ }
 
 let g:lightline.active = {
-    \ 'left': [ [ 'mode' ],
+    \ 'left': [ ['mode'],
     \           [ 'gitbranch', 'workingDirectory' ],
     \           [ 'filename', 'readonly', 'modified' ] ],
     \ 'right': [ ['cocstatus'],

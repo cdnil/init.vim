@@ -50,6 +50,7 @@ let s:pink      = g:dracula#palette.pink
 let s:purple    = g:dracula#palette.purple
 let s:red       = g:dracula#palette.red
 let s:yellow    = g:dracula#palette.yellow
+let s:blue      = g:dracula#palette.blue
 
 let s:none      = ['NONE', 'NONE']
 
@@ -74,7 +75,7 @@ if !exists('g:dracula_bold')
 endif
 
 if !exists('g:dracula_italic')
-  let g:dracula_italic = 1
+  let g:dracula_italic = 0
 endif
 
 if !exists('g:dracula_underline')
@@ -137,6 +138,7 @@ call s:h('DraculaBgLight', s:none, s:bglight)
 call s:h('DraculaBgLighter', s:none, s:bglighter)
 call s:h('DraculaBgDark', s:none, s:bgdark)
 call s:h('DraculaBgDarker', s:none, s:bgdarker)
+call s:h('DraculaVertSplit', s:bg, s:bgdarker)
 
 call s:h('DraculaFg', s:fg)
 call s:h('DraculaFgUnderline', s:fg, s:none, [s:attrs.underline])
@@ -176,6 +178,8 @@ call s:h('DraculaRedInverse', s:fg, s:red)
 call s:h('DraculaYellow', s:yellow)
 call s:h('DraculaYellowItalic', s:yellow, s:none, [s:attrs.italic])
 
+call s:h('DraculaBlue', s:blue)
+
 call s:h('DraculaError', s:red, s:none, [], s:red)
 
 call s:h('DraculaErrorLine', s:none, s:none, [s:attrs.undercurl], s:red)
@@ -184,7 +188,7 @@ call s:h('DraculaInfoLine', s:none, s:none, [s:attrs.undercurl], s:cyan)
 
 call s:h('DraculaTodo', s:cyan, s:none, [s:attrs.bold, s:attrs.inverse])
 call s:h('DraculaSearch', s:green, s:none, [s:attrs.inverse])
-call s:h('DraculaBoundary', s:comment, s:bgdark)
+call s:h('DraculaBoundary', s:bg, s:bg)
 call s:h('DraculaLink', s:cyan, s:none, [s:attrs.underline])
 
 call s:h('DraculaDiffChange', s:orange, s:none)
@@ -199,7 +203,7 @@ call s:h('DraculaDiffDelete', s:red, s:bgdark)
 set background=dark
 
 " Required as some plugins will overwrite
-call s:h('Normal', s:fg, g:dracula_colorterm || has('gui_running') ? s:bg : s:none )
+call s:h('Normal', s:fg, g:dracula_colorterm || has('gui_running') ? s:bgdarker : s:none )
 call s:h('StatusLine', s:none, s:bglighter, [s:attrs.bold])
 call s:h('StatusLineNC', s:none, s:bglight)
 call s:h('StatusLineTerm', s:none, s:bglighter, [s:attrs.bold])
@@ -235,7 +239,7 @@ hi! link TabLine      DraculaBoundary
 hi! link TabLineFill  DraculaBgDarker
 hi! link TabLineSel   Normal
 hi! link Title        DraculaGreenBold
-hi! link VertSplit    DraculaBoundary
+hi! link VertSplit    DraculaVertSplit
 hi! link Visual       DraculaSelection
 hi! link VisualNOS    Visual
 hi! link WarningMsg   DraculaOrangeInverse
@@ -265,31 +269,31 @@ hi! link SpellCap DraculaInfoLine
 hi! link SpellRare DraculaInfoLine
 
 hi! link Constant DraculaPurple
-hi! link String DraculaYellow
+hi! link String DraculaGreen
 hi! link Character DraculaPink
 hi! link Number Constant
 hi! link Boolean Constant
 hi! link Float Constant
 
 hi! link Identifier DraculaFg
-hi! link Function DraculaGreen
+hi! link Function DraculaBlue
 
-hi! link Statement DraculaPink
-hi! link Conditional DraculaPink
-hi! link Repeat DraculaPink
-hi! link Label DraculaPink
-hi! link Operator DraculaPink
-hi! link Keyword DraculaPink
-hi! link Exception DraculaPink
+hi! link Statement DraculaYellow
+hi! link Conditional DraculaYellow
+hi! link Repeat DraculaYellow
+hi! link Label DraculaYellow
+hi! link Operator DraculaYellow
+hi! link Keyword DraculaCyan
+hi! link Exception DraculaYellow
 
-hi! link PreProc DraculaPink
-hi! link Include DraculaPink
-hi! link Define DraculaPink
-hi! link Macro DraculaPink
-hi! link PreCondit DraculaPink
-hi! link StorageClass DraculaPink
-hi! link Structure DraculaPink
-hi! link Typedef DraculaPink
+hi! link PreProc DraculaYellow
+hi! link Include DraculaYellow
+hi! link Define DraculaYellow
+hi! link Macro DraculaYellow
+hi! link PreCondit DraculaYellow
+hi! link StorageClass DraculaYellow
+hi! link Structure DraculaYellow
+hi! link Typedef DraculaYellow
 
 hi! link Type DraculaCyanItalic
 
