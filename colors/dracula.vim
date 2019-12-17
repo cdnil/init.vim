@@ -138,7 +138,7 @@ call s:h('DraculaBgLight', s:none, s:bglight)
 call s:h('DraculaBgLighter', s:none, s:bglighter)
 call s:h('DraculaBgDark', s:none, s:bgdark)
 call s:h('DraculaBgDarker', s:none, s:bgdarker)
-call s:h('DraculaVertSplit', s:bg, s:bgdarker)
+call s:h('DraculaVertSplit', s:bglight, s:bg)
 
 call s:h('DraculaFg', s:fg)
 call s:h('DraculaFgUnderline', s:fg, s:none, [s:attrs.underline])
@@ -203,7 +203,7 @@ call s:h('DraculaDiffDelete', s:red, s:bgdark)
 set background=dark
 
 " Required as some plugins will overwrite
-call s:h('Normal', s:fg, g:dracula_colorterm || has('gui_running') ? s:bgdarker : s:none )
+call s:h('Normal', s:fg, g:dracula_colorterm || has('gui_running') ? s:bg : s:none )
 call s:h('StatusLine', s:none, s:bglighter, [s:attrs.bold])
 call s:h('StatusLineNC', s:none, s:bglight)
 call s:h('StatusLineTerm', s:none, s:bglighter, [s:attrs.bold])

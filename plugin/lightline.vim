@@ -4,7 +4,7 @@ let g:lightline.component = {
     \ 'totalLine': "%{line('$')}",
     \ }
 
-let g:lightline.subseparator = { 'left': '|', 'right': '|' }
+let g:lightline.subseparator = { 'left': '', 'right': '' }
 
 let g:lightline.component_expand = {
       \ }
@@ -19,18 +19,17 @@ let g:lightline.component_function = {
     \ }
 
 let g:lightline.active = {
-    \ 'left': [ ['mode'],
-    \           [ 'gitbranch', 'workingDirectory' ],
-    \           [ 'filename', 'readonly', 'modified' ] ],
+    \ 'left': [ [ 'filename', 'workingDirectory',  'gitbranch' ],
+    \           [ 'readonly', 'modified' ] ],
     \ 'right': [ ['cocstatus'],
     \            [ 'lineinfo' ],
     \            [ 'filetype' ] ] }
 
 
 let g:lightline.inactive = {
-    \ 'left': [ [ 'filename' ],
+    \ 'left': [ [ 'filename', 'workingDirectory',  'gitbranch' ],
     \           [ 'readonly', 'modified' ] ],
-    \ 'right': [ [ 'totalLine' ],
+    \ 'right': [ ['cocstatus'],
     \            [ 'lineinfo' ],
     \            [ 'filetype' ] ] }
 
