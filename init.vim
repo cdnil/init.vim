@@ -8,7 +8,7 @@ set shortmess+=I " hide intro message
 set noerrorbells
 set novisualbell
 set termguicolors
-set showmode
+set noshowmode
 set nowrap
 set linebreak
 set updatetime=100
