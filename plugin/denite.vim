@@ -24,6 +24,8 @@ call denite#custom#option('_', {
       \ 'auto-resume': 1,
       \ })
 
+" call denite#custom#kind('_', 'default_action', 'tabswitch')
+
 call denite#custom#var('grep', 'command', ['ag'])
 call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
 call denite#custom#var('grep', 'recursive_opts', [])

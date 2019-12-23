@@ -1,14 +1,14 @@
 let mapleader=" "
 
-colorscheme dracula
 
+colorscheme nil
 set path+=**
 set wildignore+=**/node_modules/** 
 set shortmess+=I " hide intro message
 set noerrorbells
 set novisualbell
 set termguicolors
-set noshowmode
+set showmode
 set nowrap
 set linebreak
 set updatetime=100
@@ -31,7 +31,7 @@ set autoread
 set list " work great with onedark.vim for showing trail chars
 set cmdheight=1
 set synmaxcol=500
-set showtabline=2
+set showtabline=1
 
 " nnoremap : ;
 " nnoremap ; :

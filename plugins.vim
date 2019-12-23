@@ -1,10 +1,18 @@
 call plug#begin('~/.vim/plugged')
 
+" Plug 'rainglow/vim'
+Plug 'jacoborus/tender.vim'
+Plug 'arcticicestudio/nord-vim'
+
+Plug 'cocopon/iceberg.vim'
+Plug 'cocopon/inspecthi.vim' " inspecting highlighting link structure
+
 " git
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim' " a git commit browser
 Plug 'tpope/vim-fugitive' " an awesome Git wrapper
 Plug 'tpope/vim-rhubarb' " GitHub extension for fugitive.vim
+Plug 'rhysd/git-messenger.vim'
 
 " ft
 Plug 'HerringtonDarkholme/yats.vim' " typescript syntax

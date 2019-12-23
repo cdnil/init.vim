@@ -1,4 +1,4 @@
-let g:lightline = { 'colorscheme': 'dracula' }
+let g:lightline = { 'colorscheme': 'nil' }
 
 let g:lightline.component = {
     \ 'totalLine': "%{line('$')}",
@@ -19,7 +19,7 @@ let g:lightline.component_function = {
     \ }
 
 let g:lightline.active = {
-    \ 'left': [ [ 'filename', 'workingDirectory',  'gitbranch' ],
+    \ 'left': [ [ 'workingDirectory',  'gitbranch', 'filename' ],
     \           [ 'readonly', 'modified' ] ],
     \ 'right': [ ['cocstatus'],
     \            [ 'lineinfo' ],
@@ -27,7 +27,7 @@ let g:lightline.active = {
 
 
 let g:lightline.inactive = {
-    \ 'left': [ [ 'filename', 'workingDirectory',  'gitbranch' ],
+    \ 'left': [ [ 'workingDirectory',  'gitbranch', 'filename' ],
     \           [ 'readonly', 'modified' ] ],
     \ 'right': [ ['cocstatus'],
     \            [ 'lineinfo' ],
