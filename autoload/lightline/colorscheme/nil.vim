@@ -25,19 +25,23 @@ let s:nord13 = ["#EBCB8B", 3]
 let s:nord14 = ["#A3BE8C", 2]
 let s:nord15 = ["#B48EAD", 5]
 
-let s:p.normal.left     = [ [ s:nord5, s:nord1 ], [ s:nord1, s:nord9 ] ]
-let s:p.normal.middle   = [ [ s:nord5, s:nord1 ] ]
-let s:p.normal.right    = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord1 ] ]
+" left
+let s:p.normal.left     = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord10 ] ]
+let s:p.inactive.left   = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord10 ] ]
+let s:p.insert.left     = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord10 ] ]
+let s:p.replace.left    = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord10 ] ]
+let s:p.visual.left     = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord10 ] ]
+
+" middle
+let s:p.normal.middle   = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord1 ] ]
+let s:p.inactive.middle = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord1 ] ]
+
+" right
+let s:p.normal.right    = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord1 ], [ s:nord5, s:nord1 ] ]
+let s:p.inactive.right  = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord1 ], [ s:nord5, s:nord1 ] ]
+
 let s:p.normal.warning  = [ [ s:nord1, s:nord13 ] ]
 let s:p.normal.error    = [ [ s:nord1, s:nord11 ] ]
-
-let s:p.inactive.left   = [ [ s:nord5, s:nord1 ], [ s:nord1, s:nord9 ] ]
-let s:p.inactive.middle = [ [ s:nord5, s:nord1 ] ]
-let s:p.inactive.right  = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord1 ] ]
-
-let s:p.insert.left     = [ [ s:nord5, s:nord1 ], [ s:nord1, s:nord9 ] ]
-let s:p.replace.left    = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord1 ] ]
-let s:p.visual.left     = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord1 ] ]
 
 let s:p.tabline.left    = [ [ s:nord5, s:nord3 ] ]
 let s:p.tabline.middle  = [ [ s:nord5, s:nord3 ] ]
