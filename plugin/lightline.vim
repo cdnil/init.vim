@@ -19,22 +19,22 @@ let g:lightline.component_function = {
     \ }
 
 let g:lightline.active = {
-    \ 'left': [ [ 'workingDirectory',  'gitbranch', 'filename' ],
-    \           [ 'readonly', 'modified' ] ],
+    \ 'left':  [ [ 'workingDirectory',  'gitbranch', 'filename' ],
+    \            [ 'readonly', 'modified' ] ],
     \ 'right': [ ['cocstatus'],
     \            [ 'lineinfo' ],
     \            [ 'filetype' ] ] }
 
 
 let g:lightline.inactive = {
-    \ 'left': [ [ 'workingDirectory',  'gitbranch', 'filename' ],
-    \           [ 'readonly', 'modified' ] ],
+    \ 'left':  [ [ 'workingDirectory',  'gitbranch', 'filename' ],
+    \            [ 'readonly', 'modified' ] ],
     \ 'right': [ ['cocstatus'],
     \            [ 'lineinfo' ],
     \            [ 'filetype' ] ] }
 
 let g:lightline.tabline = {
-    \ 'left': [ [ 'tabs' ] ],
+    \ 'left':  [ [ 'tabs' ] ],
     \ 'right': [ ] }
 
 function! WorkingDirectory()

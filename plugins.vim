@@ -3,6 +3,7 @@ call plug#begin('~/.vim/plugged')
 " Plug 'rainglow/vim'
 Plug 'jacoborus/tender.vim'
 Plug 'arcticicestudio/nord-vim'
+Plug 'chrisbra/Colorizer'
 
 Plug 'cocopon/iceberg.vim'
 Plug 'cocopon/inspecthi.vim' " inspecting highlighting link structure
