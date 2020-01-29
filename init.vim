@@ -73,5 +73,6 @@ autocmd BufRead,BufNewFile *.md set wrap linebreak
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 
-runtime plugins.vim
+command! Bd :bp | :sp | :bn | :bd " Close buffer without closing window.
 
+runtime plugins.vim

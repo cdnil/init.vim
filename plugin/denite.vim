@@ -1,4 +1,5 @@
 nnoremap <silent>s :Denite buffer file/rec -winheight=`50*winheight(0)/100` -winrow=`25*winheight(0)/100`<cr>
+nnoremap <slient>S :Denite -resume
 nnoremap <silent><leader>gg :Denite -no-empty -winheight=`50*winheight(0)/100` -winrow=`25*winheight(0)/100` grep<cr>
 nnoremap <silent><leader>g :<c-u>set operatorfunc=GrepOperator<cr>g@
 vnoremap <silent><leader>g :<c-u>call GrepOperator(visualmode())<cr>

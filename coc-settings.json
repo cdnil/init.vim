@@ -8,4 +8,7 @@
 //   "suggest.enablePreview": false,
 //   "tsserver.enableJavascript": true,
 //   "typescript.preferences.importModuleSpecifier": "relative"
+  "javascript.suggestionActions.enabled": false,
+  "eslint.filetypes": ["javascript", "javascriptreact"],
+  "tslint.autoFixOnSave": true
 }
