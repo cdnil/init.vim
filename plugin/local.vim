@@ -1,1 +1,1 @@
-command! -nargs=* Zet call local#zettel#edit(<f-args>)
+nnoremap <leader>j call create_note(<f-args>)

@@ -39,40 +39,38 @@ Plug 'junegunn/gv.vim' " a git commit browser
 Plug 'rhysd/git-messenger.vim' " reveal the commit messages under the cursor
 
 " js & ts
+Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'pangloss/vim-javascript'
-Plug 'neoclide/jsonc.vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'moll/vim-node'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
+" Plug 'neoclide/jsonc.vim'
+" Plug 'leafgarland/typescript-vim'
+" Plug 'moll/vim-node'
 " Plug 'HerringtonDarkholme/yats.vim' " typescript syntax
-" Plug 'mxw/vim-jsx'
-" Plug 'othree/yajs.vim'
 " Plug 'othree/es.next.syntax.vim'
 " Plug 'neoclide/vim-jsx-improve'
+" Plug 'othree/yajs.vim' " syntax, 
 
 " markdown
 Plug 'vim-pandoc/vim-pandoc' " pandoc flavor markdown integration
 Plug 'vim-pandoc/vim-pandoc-syntax' " pandoc flavor markdown syntax
 
+" uncategoried
 Plug 'metakirby5/codi.vim' " The interactive scratchpad for hackers.
-
 Plug 'tweekmonster/helpful.vim' " show vim version numbers in docs
-
 Plug 'dhruvasagar/vim-table-mode'
-
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-notes'
+Plug 'qpkorr/vim-renamer'
 
 call plug#end()
 
 " Plug 'vimwiki/vimwiki'
-" Plug 'xolox/vim-misc'
-" Plug 'xolox/vim-notes'
 " Plug 'lervag/wiki.vim'
 " Plug 'dhruvasagar/vim-dotoo'
 " Plug 'lervag/wiki-ft.vim'
 " Plug 'fcpg/vim-waikiki'
 " Plug 'plasticboy/vim-markdown'
-" Plug 'MaxMEllon/vim-jsx-pretty' # wrong typescript indent
 " Plug 'AndrewRadev/splitjoin.vim' " multiline <-> single-line
 " Plug 'Quramy/tsuquyomi' " typescript plugin
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -137,3 +135,4 @@ call plug#end()
 " Plug 'yianwillis/vimcdoc' " chinese help
 " Plug 'prabirshrestha/quickpick.vim'
 " Plug 'prabirshrestha/quickpick-npm.vim'
+" Plug 'mxw/vim-jsx' " deprecated
