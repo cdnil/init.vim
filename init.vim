@@ -14,7 +14,7 @@ set linebreak
 set updatetime=100
 set clipboard=unnamed
 set number
-set nocursorline
+set cursorline
 set signcolumn=yes
 set fillchars=vert:\│,fold:-
 set splitright
@@ -76,3 +76,5 @@ let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 command! Bd :bp | :sp | :bn | :bd " Close buffer without closing window.
 
 runtime plugins.vim
+
+nnoremap gd :ALEGoToDefinitionInSplit<cr>

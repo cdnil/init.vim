@@ -8,10 +8,10 @@ Plug 'lambdalisue/gina.vim' " git operator
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
-Plug 'neoclide/denite-git'
+" Plug 'neoclide/denite-git'
 
 " editing
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'hotoo/pangu.vim' "中文排版自动规范化
@@ -59,9 +59,12 @@ Plug 'vim-pandoc/vim-pandoc-syntax' " pandoc flavor markdown syntax
 Plug 'metakirby5/codi.vim' " The interactive scratchpad for hackers.
 Plug 'tweekmonster/helpful.vim' " show vim version numbers in docs
 Plug 'dhruvasagar/vim-table-mode'
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-notes'
+" Plug 'xolox/vim-misc'
+" Plug 'xolox/vim-notes'
 Plug 'qpkorr/vim-renamer'
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'dense-analysis/ale'
 
 call plug#end()
 
