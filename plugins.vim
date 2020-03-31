@@ -8,7 +8,7 @@ Plug 'lambdalisue/gina.vim' " git operator
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
-" Plug 'neoclide/denite-git'
+Plug 'neoclide/denite-git'
 
 " editing
 " Plug 'neoclide/coc.nvim', { 'branch': 'release' }
@@ -39,21 +39,17 @@ Plug 'junegunn/gv.vim' " a git commit browser
 Plug 'rhysd/git-messenger.vim' " reveal the commit messages under the cursor
 
 " js & ts
+" Plug 'leafgarland/typescript-vim'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'pangloss/vim-javascript'
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'jparise/vim-graphql'
-" Plug 'neoclide/jsonc.vim'
-" Plug 'leafgarland/typescript-vim'
-" Plug 'moll/vim-node'
 " Plug 'HerringtonDarkholme/yats.vim' " typescript syntax
-" Plug 'othree/es.next.syntax.vim'
-" Plug 'neoclide/vim-jsx-improve'
-" Plug 'othree/yajs.vim' " syntax, 
+Plug 'jparise/vim-graphql'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'eliba2/vim-node-inspect'
 
 " markdown
-Plug 'vim-pandoc/vim-pandoc' " pandoc flavor markdown integration
-Plug 'vim-pandoc/vim-pandoc-syntax' " pandoc flavor markdown syntax
+" Plug 'vim-pandoc/vim-pandoc' " pandoc flavor markdown integration
+" Plug 'vim-pandoc/vim-pandoc-syntax' " pandoc flavor markdown syntax
 
 " uncategoried
 Plug 'metakirby5/codi.vim' " The interactive scratchpad for hackers.
@@ -65,10 +61,32 @@ Plug 'qpkorr/vim-renamer'
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'dense-analysis/ale'
+Plug 'Shougo/neosnippet.vim'
+
+Plug 'vimwiki/vimwiki'
+
+Plug 'inkarkat/vim-SyntaxRange'
+Plug 'jceb/vim-orgmode'
+Plug 'tpope/vim-speeddating' " recommended by orgmode
+Plug 'tpope/vim-repeat'
+Plug 'chrisbra/NrrwRgn'
+Plug 'vim-scripts/utl.vim'
+" Plug 'mattn/calendar-vim'
+
+Plug 'puremourning/vimspector'
+" Plug 'rlue/vim-barbaric'
+Plug 'lyokha/vim-xkbswitch'
+
+Plug 'rhysd/vim-grammarous'
+Plug 'jaxbot/github-issues.vim'
 
 call plug#end()
 
-" Plug 'vimwiki/vimwiki'
+" Plug 'neoclide/jsonc.vim'
+" Plug 'moll/vim-node'
+" Plug 'othree/es.next.syntax.vim'
+" Plug 'neoclide/vim-jsx-improve'
+" Plug 'othree/yajs.vim' " syntax, 
 " Plug 'lervag/wiki.vim'
 " Plug 'dhruvasagar/vim-dotoo'
 " Plug 'lervag/wiki-ft.vim'
@@ -95,7 +113,6 @@ call plug#end()
 " Plug 'idanarye/vim-merginal', { 'branch': 'master' } "Fugitive extension to manage and merge Git branches
 " Plug 'idanarye/vim-vebugger'
 " Plug 'itchyny/dictionary.vim' " not compatible with neovim
-" Plug 'jceb/vim-orgmode'
 " Plug 'jelera/vim-javascript-syntax'
 " Plug 'jparise/vim-graphql'
 " Plug 'junegunn/fzf'

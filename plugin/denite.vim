@@ -1,9 +1,16 @@
-nnoremap <silent>s :Denite buffer file/rec -winheight=`50*winheight(0)/100` -winrow=`25*winheight(0)/100`<cr>
-nnoremap <slient>S :Denite -resume
-nnoremap <silent><leader>gg :Denite -no-empty -winheight=`50*winheight(0)/100` -winrow=`25*winheight(0)/100` grep<cr>
-nnoremap <silent><leader>g :<c-u>set operatorfunc=GrepOperator<cr>g@
-vnoremap <silent><leader>g :<c-u>call GrepOperator(visualmode())<cr>
-
+" search file
+nnoremap <silent>sf :Denite file/rec -winheight=`50*winheight(0)/100` -winrow=`25*winheight(0)/100`<cr>
+" search line
+nnoremap <silent>sl :Denite line -winheight=`50*winheight(0)/100` -winrow=`25*winheight(0)/100`<cr>
+" search denite resume
+nnoremap <silent>sd :Denite -resume<cr>
+" search grep
+nnoremap <silent>sg :Denite -no-empty -winheight=`50*winheight(0)/100` -winrow=`25*winheight(0)/100` grep<cr>
+" search buffer
+nnoremap <silent>sb :Denite -no-empty -winheight=`50*winheight(0)/100` -winrow=`25*winheight(0)/100` buffer<cr>
+" search in ...
+nnoremap <silent>si :<c-u>set operatorfunc=GrepOperator<cr>g@
+vnoremap <silent>si :<c-u>call GrepOperator(visualmode())<cr>
 
 autocmd FileType denite call s:denite_normal_settings()
 autocmd FileType denite-filter call s:denite_filter_settings()

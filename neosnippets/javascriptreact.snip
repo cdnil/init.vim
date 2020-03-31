@@ -1,0 +1,29 @@
+include javascript.snip
+
+snippet import-react
+options head
+  import React from 'react'
+
+
+snippet import-styled
+options head
+  import styled from 'styled-components'
+
+
+snippet cmp
+options head
+  import React from 'react';
+  import PropTypes from 'prop-types';
+  import styles from './func.less';
+  
+  export default function func() {
+    return (
+      <div className={styles.container}>
+        ${0:TARGET}
+      </div>
+    );
+  }
+
+  func.propTypes = {};
+
+  func.defaultProps = {};

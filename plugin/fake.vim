@@ -10,4 +10,4 @@ call fake#define('lipsum', 'fake#gen("paragraph")')
 call fake#define('s', 'fake#gen("sentense")')
 call fake#define('p', 'fake#gen("paragraph")')
 
-call fake#define('cn', 'join(map(range(fake#int(10,30)),"fake#gen(\"chinese\")"), "")')
+call fake#define('cn', 'join(map(range(fake#int(10,100)),"fake#gen(\"chinese\")"), "")')
