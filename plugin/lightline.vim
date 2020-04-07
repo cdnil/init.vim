@@ -1,4 +1,4 @@
-let g:lightline = { 'colorscheme': 'nil' }
+let g:lightline = { 'colorscheme': 'nord' }
 
 let g:lightline.component = {
     \ 'totaline': "%{line('$')}",
