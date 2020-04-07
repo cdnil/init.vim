@@ -10,8 +10,21 @@ Plug 'Shougo/neomru.vim'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
 Plug 'neoclide/denite-git'
 
+" omni
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/deoplete-lsp'
+
+
+" LSP
+" Plug 'neovim/nvim-lsp'
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
+" Plug 'dense-analysis/ale'
+
 " editing
-" Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'hotoo/pangu.vim' "中文排版自动规范化
@@ -59,8 +72,6 @@ Plug 'dhruvasagar/vim-table-mode'
 " Plug 'xolox/vim-notes'
 Plug 'qpkorr/vim-renamer'
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'dense-analysis/ale'
 Plug 'Shougo/neosnippet.vim'
 
 Plug 'vimwiki/vimwiki'
@@ -80,8 +91,12 @@ Plug 'lyokha/vim-xkbswitch'
 Plug 'rhysd/vim-grammarous'
 Plug 'jaxbot/github-issues.vim'
 
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+
 call plug#end()
 
+" Plug 'rizzatti/dash.vim'
 " Plug 'neoclide/jsonc.vim'
 " Plug 'moll/vim-node'
 " Plug 'othree/es.next.syntax.vim'
@@ -115,8 +130,6 @@ call plug#end()
 " Plug 'itchyny/dictionary.vim' " not compatible with neovim
 " Plug 'jelera/vim-javascript-syntax'
 " Plug 'jparise/vim-graphql'
-" Plug 'junegunn/fzf'
-" Plug 'junegunn/fzf.vim'
 " Plug 'junegunn/vim-slash' " 1) auto clear search highlight; 2) improved star-search
 " Plug 'justinmk/vim-dirvish'
 " Plug 'justinmk/vim-sneak' " motion
