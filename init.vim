@@ -1,21 +1,11 @@
-for f in split(glob('~/.config/nvim/custom/*.vim'), '\n')
+for f in split(glob('./custom/*.vim'), '\n')
   execute 'source' f
 endfor
 
-colorscheme nil
-
-autocmd BufNewFile,BufRead *.wxml set filetype=html
-autocmd FocusGained * :checktime
-autocmd BufRead,BufNewFile *.md set wrap linebreak
-
+" see https://github.com/vim/vim/issues/993#issuecomment-255651605
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 
-let g:XkbSwitchEnabled = 1
-let g:XkbSwitchLib = '/usr/local/lib/libInputSourceSwitcher.dylib'
+colorscheme nord
 
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=n
-endif
-
+autocmd FocusGained,BufEnter,CursorHold * checktime %

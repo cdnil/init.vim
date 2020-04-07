@@ -1,55 +1,43 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'Shougo/deol.nvim' " shell interface
-Plug 'thinca/vim-quickrun' " run a command and show its result quickly
-Plug 'lambdalisue/gina.vim' " git operator
-
-" filer
-Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/neomru.vim'
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } " file explorer
-Plug 'neoclide/denite-git'
-
-" omni
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'Shougo/deoplete-lsp'
-
-
-" LSP
-" Plug 'neovim/nvim-lsp'
+" finder
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-" Plug 'autozimu/LanguageClient-neovim', {
-"     \ 'branch': 'next',
-"     \ 'do': 'bash install.sh',
-"     \ }
-" Plug 'dense-analysis/ale'
 
 " editing
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'hotoo/pangu.vim' "中文排版自动规范化
-Plug 'mattn/emmet-vim', { 'for': ['javascript.jsx', 'html', 'css'] }
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'mattn/emmet-vim'
 Plug 'prettier/vim-prettier', { 'do': 'yarn' }
 Plug 'junegunn/vim-easy-align'
 Plug 'jiangmiao/auto-pairs'
 Plug 'godlygeek/tabular' " aligning text
-Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-speeddating'
 
-" utils
+" ui
+Plug 'terryma/vim-multiple-cursors'
 Plug 'chrisbra/Colorizer' " color hex codes and names
 Plug 'cocopon/inspecthi.vim' " inspecting highlighting link structure
 Plug 'itchyny/lightline.vim' " config for statusline and tabline
 Plug 'junegunn/goyo.vim' " Distraction-free writing
-Plug 'tkhren/vim-fake' " fake text generator
-Plug 'tpope/vim-eunuch' "Helpers for UNIX commands
+
+" app
 Plug 'itchyny/calendar.vim'
+
+Plug 'tkhren/vim-fake' " fake text generator
 
 " git
 Plug 'tpope/vim-fugitive' " an awesome Git wrapper
 Plug 'airblade/vim-gitgutter' " git sign column
 Plug 'junegunn/gv.vim' " a git commit browser
 Plug 'rhysd/git-messenger.vim' " reveal the commit messages under the cursor
+
+Plug 'metakirby5/codi.vim' " The interactive scratchpad for hackers.
+Plug 'thinca/vim-quickrun'
 
 " js & ts
 " Plug 'leafgarland/typescript-vim'
@@ -60,48 +48,50 @@ Plug 'jparise/vim-graphql'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'eliba2/vim-node-inspect'
 
-" markdown
-" Plug 'vim-pandoc/vim-pandoc' " pandoc flavor markdown integration
-" Plug 'vim-pandoc/vim-pandoc-syntax' " pandoc flavor markdown syntax
-
-" uncategoried
-Plug 'metakirby5/codi.vim' " The interactive scratchpad for hackers.
 Plug 'tweekmonster/helpful.vim' " show vim version numbers in docs
 Plug 'dhruvasagar/vim-table-mode'
-" Plug 'xolox/vim-misc'
-" Plug 'xolox/vim-notes'
-Plug 'qpkorr/vim-renamer'
-
-Plug 'Shougo/neosnippet.vim'
 
 Plug 'vimwiki/vimwiki'
 
 Plug 'inkarkat/vim-SyntaxRange'
-Plug 'jceb/vim-orgmode'
-Plug 'tpope/vim-speeddating' " recommended by orgmode
-Plug 'tpope/vim-repeat'
 Plug 'chrisbra/NrrwRgn'
-Plug 'vim-scripts/utl.vim'
-" Plug 'mattn/calendar-vim'
 
 Plug 'puremourning/vimspector'
-" Plug 'rlue/vim-barbaric'
 Plug 'lyokha/vim-xkbswitch'
 
 Plug 'rhysd/vim-grammarous'
 Plug 'jaxbot/github-issues.vim'
-
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-eunuch' "Helpers for UNIX commands
 
 call plug#end()
 
+" Plug 'vim-scripts/utl.vim'
+" Plug 'jceb/vim-orgmode'
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'qpkorr/vim-renamer'
+" Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'Shougo/neomru.vim'
+" Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'neoclide/denite-git'
+" Plug 'lambdalisue/gina.vim' " git operator
+" Plug 'Shougo/deol.nvim' " shell interface
+" Plug 'rlue/vim-barbaric'
+" Plug 'mattn/calendar-vim'
+" Plug 'xolox/vim-misc'
+" Plug 'xolox/vim-notes'
+" Plug 'vim-pandoc/vim-pandoc' " pandoc flavor markdown integration
+" Plug 'vim-pandoc/vim-pandoc-syntax' " pandoc flavor markdown syntax
+" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+" Plug 'dense-analysis/ale'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/deoplete-lsp'
+" Plug 'neovim/nvim-lsp'
 " Plug 'rizzatti/dash.vim'
 " Plug 'neoclide/jsonc.vim'
 " Plug 'moll/vim-node'
 " Plug 'othree/es.next.syntax.vim'
 " Plug 'neoclide/vim-jsx-improve'
-" Plug 'othree/yajs.vim' " syntax, 
+" Plug 'othree/yajs.vim' " syntax,
 " Plug 'lervag/wiki.vim'
 " Plug 'dhruvasagar/vim-dotoo'
 " Plug 'lervag/wiki-ft.vim'
@@ -164,7 +154,7 @@ call plug#end()
 " Plug 'vim-syntastic/syntastic' "Syntax checking hacks for vim
 " Plug 'w0rp/ale'
 " Plug 'wincent/command-t'
-" Plug 'wincent/ferret' " Enhanced multi-file search for Vim 
+" Plug 'wincent/ferret' " Enhanced multi-file search for Vim
 " Plug 'yianwillis/vimcdoc' " chinese help
 " Plug 'prabirshrestha/quickpick.vim'
 " Plug 'prabirshrestha/quickpick-npm.vim'

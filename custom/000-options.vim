@@ -35,3 +35,5 @@ set history=500
 set spelllang=en_us,cjk
 " set formatoptions+=mM
 set formatoptions=cqmMB
+set conceallevel=2
+set concealcursor=n
